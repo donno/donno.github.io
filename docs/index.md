@@ -94,17 +94,17 @@ These are games that I've played regularly at some point or the other.
 
 ## Books
 
-* Jack Reacher series - Lee Child.
+* Jack Reacher series - Lee Child.\
   I started with One Shot which is the book the first feature film is based on
   but the ninth book in the series. I read forward from there before jumping
   back to the first novel. I think I stopped at A Wanted Man and thus never got
   to Never Go Back which the second feature film is based on.
-* Imperial Radch / Ancillary Justice series - by Ann Leckie
+* Imperial Radch / Ancillary Justice series - by Ann Leckie\
   An ancillary is humanoid that has been augmented to become part of a
   spaceship and carrying out the command of hte spaceship to maintain and look
   after it. It is reminiscent of Rommie (ship's avatar) from Andromeda but
   rather than being androids they are human turned cyborg.
-* Vorkosigan Saga (2021 to 2022) - by Lois McMaster Bujold
+* Vorkosigan Saga (2021 to 2022) - by Lois McMaster Bujold\
   I started with "The Warrior's Apprentice" and went forward following
   chronological, taking a break to read "Falling Free" after "Mirror Dance" and
   later reading the two Cordelia. This worked well as "Falling Free" covers the
@@ -112,7 +112,7 @@ These are games that I've played regularly at some point or the other.
   I was hooked on these novels and found myself reading multiple chapters a
   a night. Once I was invested in Mile's story I just had to read more about
   the history of the galaxy ("Falling Free") and his parents.
-* Night Watch - 2022 - by Terry Pratchett and part of the Discworld series.
+* Night Watch - 2022 - by Terry Pratchett and part of the Discworld series.\
   I went into it not knowing what to expect as I did no prior research on the
   series or the book. The introduction was slow to the universe and as a result
   started off reading slowly and often putting it down. However, that changed
@@ -190,7 +190,7 @@ The following are select shows that I watched and would recommend.
 
 * Shameless - I accidentally watched the first four seasons in four weeks.
 * Westworld - First two seasons.
-* 12 Monkeys - TIme travel
+* 12 Monkeys - Time travel
 * Continuum - Time travel
 * Travelers - Time travel
 * Video Game High School
@@ -202,7 +202,7 @@ The following are select shows that I watched and would recommend.
 * Peacemaker
 * Lucifer
 * Crash Landing on You - Korean
-* Falling Into Your Smile - Chinese - About a ficitonal E-sport team.
+* Falling Into Your Smile - Chinese - About a fictional E-sport team.
 * Rurouni Kenshin - The anime series then the live action movies.
 
 ## Education
