@@ -166,10 +166,10 @@ Honourable mentions to Freelance Whales, OK Go and Cobra Starship.
 * Coldplay
 * American Hi-Fi
 * Stereophonics
-* The All-Americna Rejects
+* The All-American Rejects
 * Powderfinger
 
-Others include, End of Fansion, COunting Crows, Plain White T's,
+Others include, End of Fashion, Counting Crows, Plain White T's,
 We Are Scientists and Finger Eleven.
 
 ## Television
@@ -202,6 +202,7 @@ The following are select shows that I watched and would recommend.
 * Lucifer
 * Crash Landing on You - Korean
 * Falling Into Your Smile - Chinese - About a ficitonal E-sport team.
+* Rurouni Kenshin - The anime series then the live action movies.
 
 ## Education
 
