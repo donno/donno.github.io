@@ -12,6 +12,7 @@ I am a Software engineer working in Adelaide, South Australia.
 
 ## Table of Contents
 
+* [Projects](/projects.html)
 * [Past](#past)
     * [XBMC](#xbmc)
     * [University Project](#university-project)
