@@ -205,7 +205,40 @@ The following are select shows that I watched and would recommend.
 * Falling Into Your Smile - Chinese - About a fictional E-sport team.
 * Rurouni Kenshin - The anime series then the live action movies.
 
+## Hobbies
+
+* Magic the Gathering.
+  * Commander - My main commander is Gishath, Sun's Avatar.
+  * Draft
+    * Drafted GRN, RNA, WAR, M20, ELD and IKO. Lockdowns due to COVID-19 made
+      it difficult to play paper.
+  * Sealed
+* Twisty Puzzles - Rubix Cubes
+  * Due to YouTube's algorithm, it suggested a video on twisty puzzles, and
+    one video turned into more until it often would show multiple videos
+    each time. Eventually, decided that it was time to purchase some so
+    ordered a 3x3, Pyraminx and Megaminx. Next order a Square-1 and Skweb.
+  * For 3x3, my solve time is about 65 seconds average on a good day, and 90
+    seconds to 120 seconds on a bad and during a blunder.
+  * For 4x4, my first attempt took an hour or two, and second took about 30
+    minutes, still needed help for some of it.
+  * For Pyraminx, I haven't tried speed solving and after many months without
+    solving one, I probably would struggle. Likewise for the Skewb.
+  * I haven't learnt to solve the Square-1 or Megaminx yet (2022).
+  * I hope to at least participate in a World Cube Association (WCA) event when
+    one is in my city.
+
 ## Education
 
 - Studied at the University of Adelaide 2007 to 2010 (inclusive).
   Bachelour of Engineering (Software Engineering).
+
+## Sports
+* Hockey - 1995 to 2005
+* Basketball - 1998, 1999, 2002
+  I broke my arm playing basketball in 1999 and stopped playing after that.
+  I played for one season in 2002 with the same group of people.
+* Tennis
+** Wilson PeeWee Tennis
+** Started playing again as part of rehabilitation after my broken arm had
+   healed.
