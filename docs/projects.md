@@ -25,6 +25,16 @@ Descent is a 3D six degrees of freedom shooter where the player is in a ship
 and has to fly through mine tunnels of a labyrinthine nature and destroy
 virus infected robots.
 
+## relaxtolife
+Produces a calender that shows how I spend my time relaxing. This includes
+Call of Duty matches, Television/Movies from Trakt and sleep from FitBit.
+
+It could also include PUBG as I have information about almost every game I
+played.
+
+This project is in what I am calling the incubating state and is currently
+private.
+
 ## DLX tools
 
 DLX is a RISC processor architecture designed by John L. Hennessy and David A.
@@ -123,5 +133,5 @@ These are mostly projects that never really got very far.
   Implement the Dino game from Chrome (chrome://dino) for the Atari 800 or
   similar generation hardware.
 * MapTODO\
-  A small multi-user (small group) TODO list where theTODO are visiting places
-  on a map.
+  A small multi-user (small group) TODO list where the things to do are
+  visiting places on a map.
