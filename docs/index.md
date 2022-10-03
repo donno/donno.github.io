@@ -248,6 +248,6 @@ The following are select shows that I watched and would recommend.
   I broke my arm playing basketball in 1999 and stopped playing after that.
   I played for one season in 2002 with the same group of people.
 * Tennis
-** Wilson PeeWee Tennis
-** Started playing again as part of rehabilitation after my broken arm had
-   healed.
+  * Wilson PeeWee Tennis
+  * Started playing again as part of rehabilitation after my broken arm had
+    healed.
