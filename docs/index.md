@@ -3,9 +3,18 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 
-# Change this back to "home" once I've got some posts.
-layout: page
+# By default the list of blog posts will appear at the end of the page (i.e
+# after the content of this document).
+# Ideally, I would like to choose where it should appear, i.e under a ## Posts
+# section,
+# However, what I have managed to do is to put then first.
+#
+# If I do continue posting, a separate Blog page would be my goal.
+
+layout: home
 ---
+
+# Donno's Home Page
 
 Hello, I am Sean otherwise known as Donno.
 I am a Software engineer working in Adelaide, South Australia.
