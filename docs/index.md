@@ -203,6 +203,7 @@ The following are select shows that I watched and would recommend.
 * Continuum - Time travel
 * Travelers - Time travel
 * Video Game High School
+* Grim - Police procedural / Fantasy
 
 ### 2020
 
@@ -213,6 +214,58 @@ The following are select shows that I watched and would recommend.
 * Crash Landing on You - Korean
 * Falling Into Your Smile - Chinese - About a fictional E-sport team.
 * Rurouni Kenshin - The anime series then the live action movies.
+
+## YouTube
+
+Since about 2018, I regularly watch YouTube, specially with more media outlets
+producing YouTube content or simply sharing their content.
+
+The channels I initially followed were:
+* CinemaSins
+* How It Should have Ended
+* Geek & Sundry
+* minutephysics
+* SCiShow
+* Vihart
+
+Completed series
+* Space Janitors
+* NerdHQ which was renamed to Wyldwood in 2020. The conversation for a cause
+  were great. Unfortunately, once I had caught up on past ones they were giving
+  that year a miss and seeing how things go the year after.
+
+Past channels:
+* The Tonight Show starring Jimmy Fallon - this was mostly around the time he
+  just took over. So rarely seen clips since 2010. I would also often watch
+  the Seth Myers clips too.*
+* Savjz - When he started streaming Magic the Gathering: Arena rather than
+  Heartstone. By the time I completed his back catalogue on MTG, he had stopped
+  playing and moved to auto-chess before going back to Hearthstone. Overall it
+  was understable as while his MTG content was good it was not getting him the
+  views.
+
+Others
+
+* Vihart - Mathematics and hexaflexagon
+* The Command Zone - For Magic the Gathering, Commander. I don't watch the
+  podcasts or talking heads.
+* triple j for Like a Versions.
+* Mark Rober - Squirrel Maze was the introduction I had for this channel.
+* Jimmy Rees - "Meanwhile in Australia" series. Once border closures and lock
+  downs stopped for COVID-19 he moved on. The former series is very topical and
+  worked best knowing the current events at the time, I would suggest the
+  "Guy who Decides" series.
+* Mattias Krantz - Piano modifications.
+* Rob Landes / Marcus Veltri - Violinist and Pianist - Omegle song requests.
+* Jolly
+* Tingman - Twisty Puzzles - This channel convinced me to order a 3x3 puzzle
+  (Rubik Cube) and learn to solve it.
+* HarvardTHUD - Boomwhackers
+* Taskmaster (UK) - With the number of clips I watched it would have been
+  better if I started watching full episodes on local free-to-air. I did
+  however watch a full episode of the Denmark version as that was available on
+  the official YouTube channel. It was great getting to see different people
+  doing the same tasks as the UK series.
 
 ## Hobbies
 
