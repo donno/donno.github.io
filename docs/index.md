@@ -144,8 +144,9 @@ During High school:
 The above list of high school excludes any course work.
 
 ## Music
-
 The following is based on my music listening habits of the period.
+For a more complete history of artists I listened to broken down by months
+and number of plays see [Music][/music.html].
 
 I may follow this up with select songs at some point.
 
