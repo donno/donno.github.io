@@ -1,5 +1,6 @@
 ---
 layout: page
+title: Projects
 ---
 
 This are mostly software projects that I worked on over the years.
