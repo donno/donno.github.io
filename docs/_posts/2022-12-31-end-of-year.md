@@ -1,8 +1,11 @@
 ---
 layout: post
 title:  "End of Year 2022"
-date:   2022-12-31 22:00:00 +0930
+date:   2022-12-31 20:00:00 +0930
 ---
+Closing out the year 2022. An overview on some things I did, played and watched
+this year.
+
 # Things I did for 2022
 
 * Set-up this this site and blog
