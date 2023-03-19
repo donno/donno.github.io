@@ -1,5 +1,8 @@
-Digital Logic in Python
-=======================
+---
+layout: post
+title:  "Digital Logic in Python"
+date:   2023-01-18 20:00:00 +0930
+---
 The goal that I started with was to be able to express a 8-bit full adder in
 Python. The outcome of this as to be able to then output this representation
 to different formats.
@@ -164,7 +167,7 @@ The function for producing a GraphViz graph actually makes use of two visitors,
 by performing two passes over it. The first handles all the nodes (gates) and
 the second all the edges (connections).
 
-![Full adder using only NOR gates](/assets/2022-06-05-full_adder_nor_only.gv.png "Full adder using only NOR gates rendered with GraphViz.")
+![Full adder using only NOR gates](/assets/2023-01-18-full_adder_nor_only.gv.png "Full adder using only NOR gates rendered with GraphViz.")
 
 This proved very useful as I was indeed able to quickly jump from 8-bit full
 adder to a 16-bit full adder with very minimal changes.
