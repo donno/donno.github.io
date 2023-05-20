@@ -11,11 +11,14 @@ This project was mostly done 2020-09-12 and this post came from various notes
 I made at the time. As such, it some of the steps may be missing or inaccurate.
 There could also be some extra steps I performed that weren't required.
 
+In late 2021, I also lost a hard drive which held the data and attempt..
+
 ## Creating PNGs
 
 ### First time setup
 
-This is the set-up needed for osm2pgsql.
+This is the set-up needed for osm2pgsql. I used Postgres 12 but I am sure 14
+would work.
 
 * Create the database storage
     ```
@@ -55,7 +58,9 @@ This is the set-up needed for osm2pgsql.
   ```
   At the time, I jumped through hoops to install all the relevant fonts via
   Ubuntu's package manager (apt) however when revisiting it for this article I
-  noticed the get-fonts.sh script.
+  noticed the get-fonts.sh script. It turns out this was indeed from the
+  instructions around 2020 as the introduction of the script happened in
+  2022-08-03.
   The command that I used at the time was:
   ```
   apt install fonts-arundina fonts-sil-padauk fonts-khmeros fonts-gargi fonts-tibetan-machine fonts-droid-fallback fonts-open-sans
@@ -64,13 +69,14 @@ This is the set-up needed for osm2pgsql.
 The remaining steps I performed are missing as I used a Ubuntu instance on
 Windows Subsystem for Linux (WSL) which I have since deleted without taking
 a copy of my `.bash_history`. As such my notes so I am actually missing
-the commands taht creates the PNGs.
+the commands that creates the PNGs.
 
 For generating the tiles, you most likely will have better luck, following the
 Switch2OSM's article ["Manually building a tile server"](0).
 
 ### CartoCSS
 
+#### OSM Bright
 1. Install [carto](3) through [npm](4).
 2. Clone the Git [repository](5) for the OSM Bright style.
 3. Follow the setup instructions in the README.md
@@ -89,6 +95,185 @@ git clone https://github.com/mapbox/osm-bright.git
 # <follow the instructions in the README.txt>
 carto $env:HOME\MapBoxProject\OSMBright\project.mml > osm_bright.xml
 ```
+
+#### OSM Carto
+The CartoCSS format stylesheets for OpenStreetMap style is found in the
+[openstreetmap-carto](6) repository by gravitystorm. It is unclear why
+ownership was not transferred to the openstreetmap organisation as such they
+don't look as offical as the old Mapnik styles.
+
+1. Install [carto](3) through [npm](4).
+2. Clone the Git [repository](6) for the OSM CartoCSS style.
+   ```
+   git clone https://github.com/gravitystorm/openstreetmap-carto.git
+   ```
+3. Check out version tag, when writing this up it was `v5.6.1`.
+3. Run Carto to convert from the MML format to Mapnik XML.
+   ```
+   carto project.mml --file osm-mapnik.xml
+   ```
+
+What is not included here is:
+- Downloading shapefiles with scripts/get-external-data.py
+- Downloading fonts with scripts/get-fonts.sh.
+
+### Mapnik
+
+On Ubuntu 22.04
+* `apt install mapnik-utils python3-mapnik libmapnik-dev`
+* Fetch then generate_tiles.py script from the old (it was superceded back in
+  2013) stylesheet repository. However, it provides a reasonable reference
+  implementation for generating tile.
+  `curl -O https://raw.githubusercontent.com/openstreetmap/mapnik-stylesheets/master/generate_tiles.py`
+* Tweak `generate_tiles.py` to work with Python 3.
+    * Convert print statement to print functions.
+    * Change `Queue` module to `queue`. In my case, I went for the try/except
+      on the ImportError to handle both Python 2 and 3.
+* Tweak `generate_tiles.py` to generate the area of interest.
+  This means commenting out the other files and adding the snippet for the
+  relevant region which in my case is as follows:
+  ```
+  bbox = (138.54, -34.95, 138.65, -34.88)
+  render_tiles(bbox, mapfile, tile_dir, 4, 15, "Adelaide")
+  ```
+* Tweak `generate-tiles.py` to find the fonts by adding this line before
+  the call to `render_tiles()`.
+  ```
+  mapnik.register_fonts(os.path.abspath('fonts'))
+  ```
+* Running `generate_tiles.py` requires the environment variable MAPNIK_MAP_FILE
+  to be provided.
+  ```
+  MAPNIK_MAP_FILE=osm-mapnik.xml python3 generate_tiles.py
+  ```
+
+  Optionally, can also set MAPNIK_TILE_DIR to control where the tiles are
+  written out to.
+
+There were several fonts that were missing for me, such as
+- Noto Sans Adlam Unjoined Regular
+- Noto Sans Armenian Regular
+
+After removing the use of the -z parameter which lead to these warnings, the
+fonts downloaded correctly.
+```
+Warning: Illegal date format for -z, --time-cond (and not a file name).
+Warning: Disabling time condition. See curl_getdate(3) for valid date syntax.
+```
+
+There was an additional step I had to do because I was running mapnik in
+Ubuntu under WSL, but the postgres server from Windows. The step was tweak the
+osm2pgsql part within project.mml   within the `osm-mapnik.xml` to point
+confiugre the Postgres server to be able to use the instance from Microsoft
+Windows. This in turn changes the Datasource elements within the resulting XML.
+```
+  host: 127.0.0.1
+  port: 15000
+  user: postgres
+```
+
+I originally tried using the IP address for the `vEthernet (WSL)` device after
+making it listen on that address and allow clients from that IP range however
+I was unable to connect to it. In the end, I used port forwarding via SSH to
+make the Postgres server on Windows running on port 543 accessible within
+Ubuntu under WSL2 on port 15000.
+```
+ssh  172.23.146.235 -R 15000:localhost:5432
+```
+
+### Revisit
+
+As mentioned I revisited this and things were not easy. I was unable to have
+tiles generated nder Ubuntu due to RuntimeError related to the projection.
+I didn't capture the exact message and wasn't willing to retry it just for now.
+
+Meanwhile, I looked at chasing up WIndows support. The path I went down for
+this was using vcpkg for build of mapnik instead of trying to get the mason
+build working. They have plans for replacing the build system so it didn't seem
+as worth while chasing that and vcpkg was encouraging that it would have the
+necessary libraries and headers to be used by the setup.py.
+
+It should be mentioned that at the time of this experiment the vcpkg version
+of was from commit hash d7b83c0f7d11397aff5b5d8e0bb294ef6ea4354d. This is from
+back in 2022-01-28 and corresponds to the merge commit for the merge request
+of #4282 relating to clang-format being closed. This is essentially the 4.0.x
+series.
+
+A quick summary of the hacks I made to setup.py and they were hacks intended
+to be quick as possible to try to get back to generating tiles.
+
+* Use pkg-config instead of mapnik-config.
+  Of the changes, this one sounds like it could be the most beneficial to the
+  upstream as it could just work. mapnik-config. The problem is mapnik-config
+  has a --fonts argument which pkg-config wouldn't understand.
+* Convert the various link flags from GCC style to MSVC style.
+    * `-L<path>` to `/LIBPATH:<path>`
+    * `-l<name>` to `<name>.lib` and `lib<name>.lib` if name contains mapnik.
+* Hacked around the fonts and plugins.
+* Merge the proj6 branch from python-mapnik into master.
+
+I copied across the relevant DLLs into the same folder as
+`_mapnik.cp310-win_amd64.pyd` and then tried importing mapnik. The verdict was
+that worked however, I wasn't able to use postgres as my mapnik wasn't built
+with the postgis plugin (nor did I copy that).
+
+In the end I went for trying to build most of the input plugins just case.:
+```
+vcpkg install "mapnik[input-geojson,input-postgis,input-shape,input-sqlite,input-topojson,utility-shapeindex]"
+```
+
+I then dropped in the new DLLs, a minor problem I faced was libpq.dll couldn't
+be found when next to `postgis.input` (which is the postgis input plugin DLL
+with a special name), nor did placing them next to the libmapnik.dll help,
+in the end I put them next to the python.exe in my venv and told myself to
+worry about it later if I decide to try to make a wheel for others.
+
+To great disappointment, after all this it still didn't work in the end the error
+that was given was:
+```
+merc: Invalid latitude
+```
+
+And for each tile there was:
+```
+Adelaide : 18 <x> <y>   Empty Tile
+```
+
+The only lead I had for this is for kosmtik which mentions mapnik and proj6+
+https://github.com/kosmtik/kosmtik/issues/336#issuecomment-1176573218
+
+I tried running the tests but that wasn't looking good either as
+`python-mapnik` uses `nose` which  entered maintaince mode years ago and and is
+no longer developed (there is a nose2 that has that continued with the ideas of
+nose). This was problmenatic as I happened to be using Python 3.10 and that
+is the version where `collections.Callable` was moved to `collections.abc.Callable`.
+```
+File "site-packages\nose\suite.py", 106, in _set_tests
+AttributeError: module 'collections' has no attribute 'Callable'
+```
+
+`collections.Callable` had moved to collections.abc.Callable in Python 3.10
+after being deprecated under the old location since Python 3.3. A quick tweaking
+of nose to change that seemed to be the only critical issue.
+
+The tests confirmed Projection.inverse only returns infinities which was
+a [reported issue](7).
+
+The last thing I tried was tweaking hte Spatial Reference System (SRS) within
+the CartoCSS (and by association he Mapnik Style XML) to use the EPSG code
+rather than a PROJ4 string. The PROJ4 strings were replaced with the
+corresponding
+
+That is to say changing as this substitute was done in various places in the
+python-mapnik project on the proj6 branch.
+```
+# From
+srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+# To
+srs: "epsg:3857"
+```
+
+The problems persisted.
 
 ## Creating the TIFF
 
@@ -117,8 +302,7 @@ the tiles and the snippets were already in Python.
 An alternative to this step would have been to write out a world file (PGW)
 with the coordinate system information.
 
-TODO: Publish the script to GitHub (ref_tiles.py)..
-
+TODO: Publish the script to GitHub (ref_tiles.py).
 
 ### Merging the TIFFs together
 
@@ -175,3 +359,5 @@ The sizes are essentially the same as the sum of the individual PNGs.
 [3]: https://github.com/mapbox/carto
 [4]: https://www.npmjs.com/package/carto/
 [5]: https://github.com/mapbox/osm-bright/
+[6]: https://github.com/gravitystorm/openstreetmap-carto
+[7]: https://github.com/mapnik/python-mapnik/issues/246
