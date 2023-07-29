@@ -1,7 +1,7 @@
 OSM to TIFF
 ===========
 
-Rendering OSM data to  Portable Network Graphics (PNG) then constructing a
+Rendering OSM data to Portable Network Graphics (PNG) then constructing a
 Tagged Image File Format (TIFF) from the PNGs.
 
 Map data from OpenStreetMap for all maps shown in images unless otherwise
@@ -15,265 +15,60 @@ In late 2021, I also lost a hard drive which held the data and attempt..
 
 ## Creating PNGs
 
-### First time setup
+## WSL Setup
 
-This is the set-up needed for osm2pgsql. I used Postgres 12 but I am sure 14
-would work.
-
-* Create the database storage
-    ```
-    .\initdb.exe --username=postgres --auth=trust --encoding=utf-8  -D G:\GeoData\Generated\postgres_data
-    ```
-* Start the server
-    ```
-    .\pg_ctl -D G:\GeoData\Generated\postgres_data -l G:\GeoData\Generated\postgres_data\logfile start
-    ```
-* Create the database called 'gis' which is where the data will be imported
-    into as well as load the PostGIS extensions for the database.
-    Without this you get:
-    `Connection to database failed: FATAL:  database "gis" does not exist`.
-    ```
-   .\createdb -U postgres gis
-   .\psql --username postgres -d gis -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore;'
-    ```
-* Import the data
-    ```
-    .\osm2pgsql.exe -c -d gis --slim -k G:\GeoData\Source\australia-oceania-latest.osm.pbf
-    ```
-    This took about 30 minutes.
-* Apply the rendering / carto scripts. I believe tweaks the database for the
-  purpose of making the rendering easier.
+- Not shown creating a vhdx.
+- Mounting the vhdx the first time to create filesystem.
   ```
-  .\osm2pgsql.exe --slim -d gis -C 3600 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua G:\GeoData\Source\australia-oceania-latest.osm.pbf --user postgres
+  # From Windows
+  wsl --mount --vhd D:\vms\VirtualHardDisks\osm_postres.vhdx --bare
+
+  # From WSL Distribution
+  dmesg
+  # From dmesg output see what device the virtual drive was at, in my case it
+  # sde.
+  # mkfs -t ext4 -i 12000 /dev/sde
+
+  # From Windows unmount it.
+  wsl --unmount --vhd D:\vms\VirtualHardDisks\osm_postres.vhdx
   ```
-* Clone the OpenStreetMap Carto repository.
+References: https://github.com/microsoft/WSL/discussions/5896#discussioncomment-1010426
+
+- Remount the image 
   ```
-  git clone https://github.com/gravitystorm/openstreetmap-carto.git
+  wsl --mount --vhd D:\vms\VirtualHardDisks\osm_postres.vhdx --name osm_postgres
   ```
-* Inside the repository, run the script
+- Setup the postgres database.
   ```
-  cd openstreetmap-carto
-  scripts/get-external-data.py --username postgres
-  scripts/get-fonts.sh
+  sudo apt install postgresql postgis osm2pgsql
+  sudo mkdir /mnt/wsl/osm_postgres/osm_psqldb
+  sudo chown postgres:postgres /mnt/wsl/osm_postgres/osm_psqldb
+  sudo --login --user postgres
+  /usr/lib/postgresql/14/bin/initdb --username=postgres --auth=trust --encoding=utf-8 /mnt/wsl/osm_postgres/osm_psqldb
+  # Modify the postgres.conf in the data folder with a different port (I used 150001)
+  /usr/lib/postgresql/14/bin/pg_ctl -D /mnt/wsl/osm_postgres/osm_psqldb -l /mnt/wsl/osm_postgres/osm_psqldb/logfile start
+  /usr/lib/postgresql/14/bin/createdb --port 15000 -U postgres gis
+  /usr/lib/postgresql/14/bin/psql --port=15000 --username=postgres -d gis -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore;'
+  osm2pgsql 
   ```
-  At the time, I jumped through hoops to install all the relevant fonts via
-  Ubuntu's package manager (apt) however when revisiting it for this article I
-  noticed the get-fonts.sh script. It turns out this was indeed from the
-  instructions around 2020 as the introduction of the script happened in
-  2022-08-03.
-  The command that I used at the time was:
+- Import the data
   ```
-  apt install fonts-arundina fonts-sil-padauk fonts-khmeros fonts-gargi fonts-tibetan-machine fonts-droid-fallback fonts-open-sans
+  osm2pgsql --port=15000 --username=postgres --database gis --create --slim -k /opt/australia-latest.osm.pbf
+  osm2pgsql --port=15000 --username=postgres --database gis --slim -C 3600 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua /opt/australia-latest.osm.pbf
   ```
+  First command: osm2pgsql took 2087s (34m 47s) overall.
+  Second commmand: osm2pgsql took 1643s (27m 23s) overall.
 
-The remaining steps I performed are missing as I used a Ubuntu instance on
-Windows Subsystem for Linux (WSL) which I have since deleted without taking
-a copy of my `.bash_history`. As such my notes so I am actually missing
-the commands that creates the PNGs.
-
-For generating the tiles, you most likely will have better luck, following the
-Switch2OSM's article ["Manually building a tile server"](0).
-
-### CartoCSS
-
-#### OSM Bright
-1. Install [carto](3) through [npm](4).
-2. Clone the Git [repository](5) for the OSM Bright style.
-3. Follow the setup instructions in the README.md
-    * Download shapefile
-    * Rename/copy configure.py.sample to configure.py
-    * Tweak the variables to match the setting. The importer should be
-        osm2pgsql (which is the default at time of writing this).
-        * Run make
-4. Run Carto to convert from the MML format to Mapnik XML.
-
-I don't think I bothered with shapeindex as its a one-off task and I wasn't
-going to reuse the shapefiles.
-```
-npm -g carto
-git clone https://github.com/mapbox/osm-bright.git
-# <follow the instructions in the README.txt>
-carto $env:HOME\MapBoxProject\OSMBright\project.mml > osm_bright.xml
-```
-
-#### OSM Carto
-The CartoCSS format stylesheets for OpenStreetMap style is found in the
-[openstreetmap-carto](6) repository by gravitystorm. It is unclear why
-ownership was not transferred to the openstreetmap organisation as such they
-don't look as offical as the old Mapnik styles.
-
-1. Install [carto](3) through [npm](4).
-2. Clone the Git [repository](6) for the OSM CartoCSS style.
-   ```
-   git clone https://github.com/gravitystorm/openstreetmap-carto.git
-   ```
-3. Check out version tag, when writing this up it was `v5.6.1`.
-3. Run Carto to convert from the MML format to Mapnik XML.
-   ```
-   carto project.mml --file osm-mapnik.xml
-   ```
-
-What is not included here is:
-- Downloading shapefiles with scripts/get-external-data.py
-- Downloading fonts with scripts/get-fonts.sh.
-
-### Mapnik
-
-On Ubuntu 22.04
-* `apt install mapnik-utils python3-mapnik libmapnik-dev`
-* Fetch then generate_tiles.py script from the old (it was superceded back in
-  2013) stylesheet repository. However, it provides a reasonable reference
-  implementation for generating tile.
-  `curl -O https://raw.githubusercontent.com/openstreetmap/mapnik-stylesheets/master/generate_tiles.py`
-* Tweak `generate_tiles.py` to work with Python 3.
-    * Convert print statement to print functions.
-    * Change `Queue` module to `queue`. In my case, I went for the try/except
-      on the ImportError to handle both Python 2 and 3.
-* Tweak `generate_tiles.py` to generate the area of interest.
-  This means commenting out the other files and adding the snippet for the
-  relevant region which in my case is as follows:
+  This next command requires ogr2ogr (from gdal-bin)
   ```
-  bbox = (138.54, -34.95, 138.65, -34.88)
-  render_tiles(bbox, mapfile, tile_dir, 4, 15, "Adelaide")
+  openstreetmap-carto$ scripts/get-external-data.py --port 15000 --user postgres  --database gis
   ```
-* Tweak `generate-tiles.py` to find the fonts by adding this line before
-  the call to `render_tiles()`.
+- 
+
+  All that and ended up with 
   ```
-  mapnik.register_fonts(os.path.abspath('fonts'))
+  RuntimeError: projection::forward not supported without proj4 support (-DMAPNIK_USE_PROJ4
   ```
-* Running `generate_tiles.py` requires the environment variable MAPNIK_MAP_FILE
-  to be provided.
-  ```
-  MAPNIK_MAP_FILE=osm-mapnik.xml python3 generate_tiles.py
-  ```
-
-  Optionally, can also set MAPNIK_TILE_DIR to control where the tiles are
-  written out to.
-
-There were several fonts that were missing for me, such as
-- Noto Sans Adlam Unjoined Regular
-- Noto Sans Armenian Regular
-
-After removing the use of the -z parameter which lead to these warnings, the
-fonts downloaded correctly.
-```
-Warning: Illegal date format for -z, --time-cond (and not a file name).
-Warning: Disabling time condition. See curl_getdate(3) for valid date syntax.
-```
-
-There was an additional step I had to do because I was running mapnik in
-Ubuntu under WSL, but the postgres server from Windows. The step was tweak the
-osm2pgsql part within project.mml   within the `osm-mapnik.xml` to point
-confiugre the Postgres server to be able to use the instance from Microsoft
-Windows. This in turn changes the Datasource elements within the resulting XML.
-```
-  host: 127.0.0.1
-  port: 15000
-  user: postgres
-```
-
-I originally tried using the IP address for the `vEthernet (WSL)` device after
-making it listen on that address and allow clients from that IP range however
-I was unable to connect to it. In the end, I used port forwarding via SSH to
-make the Postgres server on Windows running on port 543 accessible within
-Ubuntu under WSL2 on port 15000.
-```
-ssh  172.23.146.235 -R 15000:localhost:5432
-```
-
-### Revisit
-
-As mentioned I revisited this and things were not easy. I was unable to have
-tiles generated nder Ubuntu due to RuntimeError related to the projection.
-I didn't capture the exact message and wasn't willing to retry it just for now.
-
-Meanwhile, I looked at chasing up WIndows support. The path I went down for
-this was using vcpkg for build of mapnik instead of trying to get the mason
-build working. They have plans for replacing the build system so it didn't seem
-as worth while chasing that and vcpkg was encouraging that it would have the
-necessary libraries and headers to be used by the setup.py.
-
-It should be mentioned that at the time of this experiment the vcpkg version
-of was from commit hash d7b83c0f7d11397aff5b5d8e0bb294ef6ea4354d. This is from
-back in 2022-01-28 and corresponds to the merge commit for the merge request
-of #4282 relating to clang-format being closed. This is essentially the 4.0.x
-series.
-
-A quick summary of the hacks I made to setup.py and they were hacks intended
-to be quick as possible to try to get back to generating tiles.
-
-* Use pkg-config instead of mapnik-config.
-  Of the changes, this one sounds like it could be the most beneficial to the
-  upstream as it could just work. mapnik-config. The problem is mapnik-config
-  has a --fonts argument which pkg-config wouldn't understand.
-* Convert the various link flags from GCC style to MSVC style.
-    * `-L<path>` to `/LIBPATH:<path>`
-    * `-l<name>` to `<name>.lib` and `lib<name>.lib` if name contains mapnik.
-* Hacked around the fonts and plugins.
-* Merge the proj6 branch from python-mapnik into master.
-
-I copied across the relevant DLLs into the same folder as
-`_mapnik.cp310-win_amd64.pyd` and then tried importing mapnik. The verdict was
-that worked however, I wasn't able to use postgres as my mapnik wasn't built
-with the postgis plugin (nor did I copy that).
-
-In the end I went for trying to build most of the input plugins just case.:
-```
-vcpkg install "mapnik[input-geojson,input-postgis,input-shape,input-sqlite,input-topojson,utility-shapeindex]"
-```
-
-I then dropped in the new DLLs, a minor problem I faced was libpq.dll couldn't
-be found when next to `postgis.input` (which is the postgis input plugin DLL
-with a special name), nor did placing them next to the libmapnik.dll help,
-in the end I put them next to the python.exe in my venv and told myself to
-worry about it later if I decide to try to make a wheel for others.
-
-To great disappointment, after all this it still didn't work in the end the error
-that was given was:
-```
-merc: Invalid latitude
-```
-
-And for each tile there was:
-```
-Adelaide : 18 <x> <y>   Empty Tile
-```
-
-The only lead I had for this is for kosmtik which mentions mapnik and proj6+
-https://github.com/kosmtik/kosmtik/issues/336#issuecomment-1176573218
-
-I tried running the tests but that wasn't looking good either as
-`python-mapnik` uses `nose` which  entered maintaince mode years ago and and is
-no longer developed (there is a nose2 that has that continued with the ideas of
-nose). This was problmenatic as I happened to be using Python 3.10 and that
-is the version where `collections.Callable` was moved to `collections.abc.Callable`.
-```
-File "site-packages\nose\suite.py", 106, in _set_tests
-AttributeError: module 'collections' has no attribute 'Callable'
-```
-
-`collections.Callable` had moved to collections.abc.Callable in Python 3.10
-after being deprecated under the old location since Python 3.3. A quick tweaking
-of nose to change that seemed to be the only critical issue.
-
-The tests confirmed Projection.inverse only returns infinities which was
-a [reported issue](7).
-
-The last thing I tried was tweaking hte Spatial Reference System (SRS) within
-the CartoCSS (and by association he Mapnik Style XML) to use the EPSG code
-rather than a PROJ4 string. The PROJ4 strings were replaced with the
-corresponding
-
-That is to say changing as this substitute was done in various places in the
-python-mapnik project on the proj6 branch.
-```
-# From
-srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
-# To
-srs: "epsg:3857"
-```
-
-The problems persisted.
 
 ## Creating the TIFF
 
