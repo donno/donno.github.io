@@ -5,6 +5,8 @@ date:   2023-11-12 22:00:00 +0930
 ---
 
 This was quite the busy weekend for me and included two programming projects.
+The first was parsing AEC Media Feed data for Australia's 2023 Referendum and
+the second was looking at the RTMP and FLV protocol and format respectively.
 
 ## AEC Data Project
 The first project started Friday evening and involved working with the
