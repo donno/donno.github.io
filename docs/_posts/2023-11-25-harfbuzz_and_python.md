@@ -9,7 +9,6 @@ read a font file (TrueType font, .ttf) and convert a sequence of Unicode (text)
 into properly formatted and positioned glyph output. My goal was to create
 3D geometry from it, be it flat.
 
-
 My starting point was using [vharfbuzz][1] which made using Harfbuzz look easy.
 It does indeed provide a user-friendlier way to use Harfbuzz in Python. The
 thing it brought most to the table for me was the SVG output. It demonstrated
@@ -20,7 +19,7 @@ the underlying library so I could focus on my initial part.
 
 `vharfbuzz` is a wrapper over the top of [uharfbuzz][2] which is a Cython
 bindings for the HarfBuzz. The binding has a few nice minor niceties that make
-the library not too C-like, but does take several funciton calls to setup.
+the library not too C-like, but does take several function calls to setup.
 
 My goal was for each glyph produce generate a series of (X, Y) coordinates that
 defined a line. In this case most the lines are closed so they form a polygon.
@@ -50,7 +49,7 @@ and outer circle.
 
 ![The words "Hello world" shaped by HarfBuzz with each path coloured different](/assets/2023-11-25-hello_world_coloured.png)
 
-Now that the text was drawn ato a state where I was happy with it, I removed
+Now that the text was drawn to a state where I was happy with it, I removed
 `vharfbuzz` from the project. This was made possible because I already put in
 place enough abstraction that could deal with the several lines of set-up and
 I wasn't using the extra things the former library provides.
