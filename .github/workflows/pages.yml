@@ -21,6 +21,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # For references to run-on, see https://github.com/actions/runner-images
+  # At the time of writing, ubuntu-latest was an alias for ubuntu-22.04.
+
   # Build job
   build:
     runs-on: ubuntu-latest
@@ -30,10 +33,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./docs
-          destination: ./_site
+        run: bundle exec jekyll build --source ./docs --destination ./_site --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
 
