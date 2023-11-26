@@ -62,6 +62,7 @@ end ignoring the control point.
 ![The letter f with no Bezier](/assets/2023-11-25-letter_f_stage_0.png)
 
 My initial few attempts failed as seen here:
+
 ![The letter f with failed attempt to add curve](/assets/2023-11-25-letter_f_stage_1.png)
 ![The letter f with another failed attempt to add curve](/assets/2023-11-25-letter_f_stage_2.png)
 ![The letter f with another failed attempt to add curve](/assets/2023-11-25-letter_f_stage_3.png)
