@@ -1,0 +1,6 @@
+
+# The built-version of the web-site goes to this folder.
+_site/
+
+# The Gems downloaded by bundle goes here.
+vendor/
