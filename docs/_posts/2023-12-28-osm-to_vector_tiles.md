@@ -114,6 +114,10 @@ corresponding style.
 
 ![Adelaide rendered by QGIS from vector tiles using the Positron GL style](/assets/2023-12-28_qgis_vector_tiles_positron.png "Adelaide rendered by QGIS from vector tiles using Positron GL style.")
 
+![Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style](/assets/2023-12-28-adelaide-osm_raster_v_vector.gif "Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style.")
+
+2023-12-28-adeliade-osm_raster_v_vector.gif
+
 [0]: https://www.openstreetmap.org/
 [1]: https://github.com/mapbox/mbtiles-spec
 [2]: https://github.com/mapbox/vector-tile-spec
