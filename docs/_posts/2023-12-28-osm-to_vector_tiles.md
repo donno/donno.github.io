@@ -114,6 +114,11 @@ corresponding style.
 
 ![Adelaide rendered by QGIS from vector tiles using the Positron GL style](/assets/2023-12-28_qgis_vector_tiles_positron.png "Adelaide rendered by QGIS from vector tiles using Positron GL style.")
 
+The following is an animation showing an area in Adelaide rendered by QGIS
+starting from the OSM raster tiles using an XYZ layer directly from the
+OpenStreetMap tile service, then the vector tiles with the OSM Bright style
+applied then Positron GL style applied.
+
 ![Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style](/assets/2023-12-28-adelaide-osm_raster_v_vector.gif "Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style.")
 
 2023-12-28-adeliade-osm_raster_v_vector.gif
