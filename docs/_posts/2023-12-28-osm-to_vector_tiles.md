@@ -53,6 +53,12 @@ data is already small enough for the area you are interested in.
     osmium extract Source/OpenStreetMap/osm/australia-2023-12-28.osm.pbf --bbox 137.994,-35.619,139.495,-34.359 --output Generated/OpenStreetMap/adelaide-2023-12-28.osm.pbf
     ```
 
+To determine what the bounding box was the following steps were followed:
+* Go to the CD (Coordinate Display) tab of [Tile Calculator](10).
+* Translate yellow box over the target region, this is done by dragging the box.
+* Resize the box using the corners or mid-points around the edge.
+* Copy the bounding box from the right hand side in the Coordinate Display tab.
+
 Not included above is the setting up the additional shapefiles required by
 tilemaker to produce maps similar to OpenStreetMap that include data that isn't
 available from the OSM file.
@@ -130,3 +136,4 @@ applied then Positron GL style applied.
 [7]: https://github.com/openmaptiles/osm-bright-gl-style/releases/download/v1.9/v1.9.zip
 [8]: https://github.com/openmaptiles/positron-gl-style
 [9]: https://github.com/microsoft/AustraliaBuildingFootprints
+[10]: https://tools.geofabrik.de/calc/?tab=1
