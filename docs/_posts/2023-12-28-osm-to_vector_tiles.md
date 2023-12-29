@@ -4,9 +4,8 @@ title:  "OSM to Vector Tiles"
 date:   2023-12-28 23:00:00 +0930
 ---
 
-Rendering [OpenStreetMap](0) (OSM) data to vector tiles in [MBTiles](1).
-
-The tiles are in the [Mapbox Vector Tile Format](2) and [tilemaker](3) will be
+Rendering [OpenStreetMap](0) (OSM) data to vector tiles in [MBTiles](1), where
+the tiles are in the [Mapbox Vector Tile Format](2) and [tilemaker](3) will be
 used to do the heavy lifting.
 
 The tilemaker tool aims to be 'stack-free' where you don't need a database or
@@ -120,8 +119,6 @@ OpenStreetMap tile service, then the vector tiles with the OSM Bright style
 applied then Positron GL style applied.
 
 ![Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style](/assets/2023-12-28-adelaide-osm_raster_v_vector.gif "Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style.")
-
-2023-12-28-adeliade-osm_raster_v_vector.gif
 
 [0]: https://www.openstreetmap.org/
 [1]: https://github.com/mapbox/mbtiles-spec
