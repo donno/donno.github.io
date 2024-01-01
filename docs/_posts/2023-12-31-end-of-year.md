@@ -21,19 +21,8 @@ this year.
 ** Worked on some world-building ideas for a game I had. Hopefully in the new
    year I can get to writing up about various parts of that. I don't expect to
    complete the game itself let alone get a beta out for it.
-
-* Set-up this this site and blog
-* Purchased a domain name
-* Purchased a VPS with the plan of setting up WireGuard. There were two main
-  uses for WireGuard that was looking for:
-    * Secure my phone when on public Wi-Fi by pushing traffic through the VPS -
-      I managed to get this working
-    * Access my home network from my phone when out and about - I wasn't able
-      to get this working.
-* Travelled on the Ghan from Alice Springs to Darwin, stopping off at Katherine
-  on the way.
-  Overall good trip even if it was way to hot in Darwin to be outside.
-* Only went bouldering once this year.
+* Went boulding a couple of times this year except the closest gym is closing
+  in January 2024 which is a shame as I was thinking of getting a membership.
 
 ## Games
 Towards the end of the year I stopped my Xbox Live Gold subscription after
@@ -43,7 +32,7 @@ it and the Games with Gold were not worth it.
 * Xbox Games Pass
     * Payday 3 - This was the game that triggered my purchase of the Games Pass
       as friends wanted to play it.
-    * Headbangers: Rytham Royale - My playtime and ejoyment of this easily
+    * Headbangers: Rhythm Royale - My playtime and enjoyment of this easily
       justified a month of Games Pass.
     * Gotham Knights - I would never have purchased this myself but it is
       payable. The strange thing was the almost Division-like controls rather
@@ -63,7 +52,7 @@ it and the Games with Gold were not worth it.
       player part it seems like they removed the online stats which is a shame.
       Overall, the levels looked the same as the first one but better graphics
       and the best new feature was showing how many people contributed to your
-      dealth. I would really need the time to play it would only
+      deaths. I would really need the time to play it would only
       get it if it was $40 but might consider $50.
 * Spyro
     * I'm about half way through the third game.
