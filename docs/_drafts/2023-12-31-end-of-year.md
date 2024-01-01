@@ -70,16 +70,22 @@ it and the Games with Gold were not worth it.
 * Magic the Gathering
     * Played paper magic in the Magic of Summer Event in December.
     * Only played a few games of Brawl on Arena (the computer game version).
-      The motiviating factor was the mastery tree had a Gishath Avatar which is
+      The motivating factor was the mastery tree had a Gishath Avatar which is
       my commander in game and on paper.
 * Diablo Immortals
     * I still played way too much of this game.
     * They did sucker me in as they regularly releasing new content.
-    * I haven't played the new top-down tower defense mode, which really seemed
+    * I haven't played the new top-down tower defence mode, which really seemed
       like it originated because some NetEase developers were tasked with
       writing a new game and decided to build it inside Diablo Immortals to
       prototype and then someone decided "hey, that is fun, we can theme it
       and ship it".
+* lichess
+  * Played 571 games
+  * Started year with a rating of 969 and ended on 1054.
+  * Longest winning streak was 10 games between 2023-09-07 to 2023-09-09.
+  * Longest streak (of playtime): 1 hour 21 minutes on 2023-03-11.
+  * Reached highest raiting in blitz of 1110.
 
 ## Television
 
@@ -106,6 +112,32 @@ it and the Games with Gold were not worth it.
     * Touch Your Heart - Season 1
     * Unstable - Season 1
     * Love to Hate You - Season 1
+
+## Music
+
+### Artists
+* British India
+* Say Hi
+* She & Him
+* San Cisco
+* BUMP OF CHICKEN (Theme song for Spy vs Family)
+
+## Top Tracks
+
+* Lollipop (Candyman) - Aqua
+* Doctor Jones - Aqua
+* I Can Make You Love Me - British India
+* Wrong Direction - British India
+* Better Off Alone - Alice Deejay
+
+For Lollipop, the catalyst for listening to that was a clip of Magnus Carlsen
+playing chess while hanging out with the Botez sisters (Chess streamers) with
+the song in the background.
+
+For British India, I don't really remember listening to the songs themselves it
+must have more been Spotify got stuck on a playlist. Likewise for
+Better Off Alone but that might have been it was a feature on a  playlist that
+also included several Ace of Base songs.
 
 # Things for 2024
 I only did two of the items on last years TODO list for 2023 which were
