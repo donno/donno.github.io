@@ -361,6 +361,15 @@ docker pull ghcr.io/donno/lichess_streamer:v1
 podman pull ghcr.io/donno/lichess_streamer:v1
 ```
 
+### Running
+Create a file called `twitch.env` with your stream key for Twitch in the
+form `STREAM_KEY=live_....` in it.
+
+```
+docker run --env-file twitch.env lichess_streamer:latest
+podman run --env-file twitch.env lichess_streamer:latest
+```
+
 [0]: https://github.com/obsproject/obs-studio/issues/8021#issuecomment-1376148786
 [1]: https://obsproject.com/forum/threads/last-version-of-obs-to-support-windows-8-1.165070/post-605624
 [2]: https://rufus.ie/en/
