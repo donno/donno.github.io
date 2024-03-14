@@ -5,7 +5,7 @@ date:   2023-08-26 13:00:00 +0930
 ---
 
 Today, I came across some tools for Hyper-V when looking into
-[Host Compute System](0) APIs for Microsoft Windows for controlling
+[Host Compute System][0] APIs for Microsoft Windows for controlling
 virtual machines. This covers more system administration tools rather than
 the programming interface.
 
@@ -38,8 +38,8 @@ managing virtual machines from the command line. At the time of writing
 the Windows 10 version that I had didn't include the ability to create a VM.
 
 For creating a virtual Machine in Hyper-V, the best way to do that from the
-command line is with the [New-VM](1) command-let in PowerShell. However, you
-will likely want to use the [New-VHD](2) command-let to create a virtual
+command line is with the [New-VM][1] command-let in PowerShell. However, you
+will likely want to use the [New-VHD][2] command-let to create a virtual
 hard-drive image for the new VM, however the former command has two parameters
 for creating a new image (`-NewVHDPath` and `-NewVHDSizeBytes`)
 
@@ -83,7 +83,7 @@ the VirtualMachine object ready for-use by another command.
 `hvc ssh [options] [user@]<VM>`
 
 This interested me a lot as I previously set-up a PowerShell command-let to
-start a VM ([Start-VM](3)) then query the IP address of that VM before
+start a VM ([Start-VM][3]) then query the IP address of that VM before
 issuing a ssh to the VM.
 
 This was in part because Hyper-V uses DHCP and doesn't seem to have a nice way
@@ -151,7 +151,7 @@ IP that it adds the corresponding entry for the host to use.
 ## Tool Installation
 
 The tools required to provide this interaction are from source repository for
-the Linux kernel and are in the [tools/hv](4) directory.
+the Linux kernel and are in the [tools/hv][4] directory.
 
 
 * kvp daemon is responsible for what they call the key value pair
@@ -161,7 +161,7 @@ the Linux kernel and are in the [tools/hv](4) directory.
 
   For example, there is a key HostingSystemEditionIds which for my machine
   had the value of 48 which corresponds with  Windows 10 Pro  from
-  the documentation for [GetProductInfo](5).
+  the documentation for [GetProductInfo][5].
 
   A browse of it source suggests it enables the host to query the contents of
   /etc/os-release, however I was unable to figure out how to query it.
@@ -169,7 +169,7 @@ the Linux kernel and are in the [tools/hv](4) directory.
 * fcopy daemon is responsible for host to guest copy functionality.
 * vss demon is responsible for host initiated guest snapshot for Hyper-V.
 
-I later found the [Hyper-V Integration Services](6) documentation which
+I later found the [Hyper-V Integration Services][6] documentation which
 explains the daemons as well.
 
 ### Alpine
