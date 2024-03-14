@@ -28,7 +28,7 @@ developer's feature list.
 
 1. Start Ubuntu 22.04 in Windows Subsystem for Linux
 2. `mkdir ~/tilemaker-v2.4.0`
-3. `cd ~tilemaker-v2.4.0`
+3. `cd ~/tilemaker-v2.4.0`
 4. `curl -OL https://github.com/systemed/tilemaker/releases/download/v2.4.0/tilemaker-ubuntu-22.04.zip && unzip tilemaker-ubuntu-22.04.zip`
 5. `./build/tilemaker --input /mnt/g/GeoData/Source/OpenStreetMap/osm/australia-2023-12-28.osm.pbf --output /mnt/g/GeoData/Generated/OpenStreetMap/australia-2023-12-28.mbtiles --config ./resources/config-openmaptiles.json --process resources/process-openmaptiles.lua`
 
