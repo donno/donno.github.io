@@ -133,20 +133,90 @@ nerdctl.exe run --rm --isolation=hyperv --net none mcr.microsoft.com/windows/nan
 * The `--net none` option simply means it works without networking so you don't
   need to set that up.
 
-## Things to investigate
+## Building images
+The next thing to investigate is building container images.
 
-* Networking
-    * https://github.com/microsoft/windows-container-networking/releases
-    - This doesn't seem to work as it doesn't support CNI versions 1.0.0 and only supports 0.2.0 and 0.3.0.
+The `nerdctl.exe build` command issues an error:
+> error msg="`buildctl` needs to be installed and `buildkitd` needs to be running, see https://github.com/moby/buildkit"
 
-    - https://github.com/containernetworking/plugins/releases is looking like a better approach.
-* Building containers (buildx)
-  - https://github.com/moby/buildkit/releases/download/v0.13.0/buildkit-v0.13.0.windows-amd64.tar.gz
-  * https://github.com/moby/buildkit/blob/master/docs/windows.md
-* https://raw.githubusercontent.com/microsoft/Windows-Containers/Main/helpful_tools/Install-ContainerdRuntime/install-containerd-runtime.ps1
+My timing of going down this whole rabbit hole wasn't too bad because about a
+week before I did, a new version of buildkit was released (0.13.0) and with it
+comes experimental Windows Containers support is now available with containerd
+worker and the Windows release artifacts now contain the buildkitd.exe binary.
 
+* Download
+  ```
+  curl.exe -LO https://github.com/moby/buildkit/releases/download/v0.13.0/buildkit-v0.13.0.windows-amd64.tar.gz
+  ```
+* Extract the tarball
+  * The tarball contains `buildkitd.exe` (the daemon/backend) and
+    `buildctl.exe` which is the front-end / CLI tool.
+* Run the daemon: `.\bin\buildkitd.exe`
+* To check it works try building simple hello world image from the Example
+  Build section of the project's [Windows documentation][4].
+  * Create Dockerfile with:
+    ```Dockerfile
+    FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
+    USER ContainerAdministrator
+    COPY hello.txt C:/
+    RUN echo "Goodbye!" >> hello.txt
+    CMD ["cmd", "/C", "type C:\\hello.txt"]
+    ```
+    As mentioned below my FROM line ended up being
+  * Create hello.exe with:
+    ```
+    Hello from buildkit!
+    This message shows that your installation appears to be working correctly.
+    ```
+  * Build the image.
+    ```
+    buildctl.exe build `
+      --frontend=dockerfile.v0 `
+      --local context=. \ `
+      --local dockerfile=. `
+      --output type=image,name=example.com/buildkit-test/hello-buildkit,push=false
+    ```
+
+### Trouble shooting
+* No match for platform in manifest.
+  * The full message looks like this
+    ```
+    error: failed to solve: mcr.microsoft.com/windows/nanoserver:2004: failed to resolve source metadata for mcr.microsoft.com/windows/nanoserver:2004: no match for platform in manifest: not found`
+    failed to resolve source metadata for mcr.microsoft.com/windows/nanoserver:2004: no match for platform in manifest: not found
+    ```
+  * Fix is to modify the file so the tag is `ltsc2022-amd64`.
+  * Unconfirmed but the reason seems to be Microsoft published several
+    multi-arch images and its confusing it.
+* RUN command failes to create the container.
+  * The full message looks likes this:
+    ```
+    error: failed to solve: process "cmd /S /C echo \"Goodbye!\" >> hello.txt" did not complete successfully: failed to create shim task: hcs::CreateComputeSystem tx71wvgg9bgup1xrkkllqlgpc: The container operating system does not match the host operating system.: unknown
+    ```
+  * The workaround for me was to find the image that matches my host, in my
+    case 2002-amd64.
+  * Unconfirmed but again the reason seems to be same as above, however in this
+    case to run the nanoserver ltsc2022-amd64 image through `nerdctl.exe`, I
+    would need to do `--isolation=hyperv` and I haven't been unable to find
+    the equivalent setting ot make that the default for containerd or have
+    buildkit do the same.
+
+### What's next?
+
+With the buildkit support being so fresh the nerdctl tool doesn't yet work
+with it. The command line help shows that the default address is the pipe that
+buildkitd.exe runs on. Based on a pull request that was looking to add Windows
+support it sounded like most the work is already in place but it was simply
+disabled as it couldn't be tested or used before now.
+
+## Other things of intrest
+
+The [install-containerd-runtime.ps1][5] by Microsoft might be interesting to 
+check over. This is more of an all encompassing script for setting it up as it
+includes enabling the Windows Features.
 
 [0]: https://learn.microsoft.com/en-us/virtualization/api/hcs/overview
 [1]: https://github.com/microsoft/hcsshim
 [2]: https://github.com/microsoft/windows-container-networking/pull/96
 [3]: https://github.com/microsoft/windows-container-networking/pull/101
+[4]: https://github.com/moby/buildkit/blob/master/docs/windows.md
+[5]: https://github.com/microsoft/Windows-Containers/raw/Main/helpful_tools/Install-ContainerdRuntime/install-containerd-runtime.ps1
