@@ -7,7 +7,7 @@
 
 ## Post reboot
 
-1. Install nano, `apk update && apk add nano`
+1. Install nano & tmux, `apk update && apk add nano tmux`
 2. Modify the message of the day (really the sign-in message).
    `nano /etc/motd`
    * Remove mention of the setup-alpine
