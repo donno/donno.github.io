@@ -1,4 +1,8 @@
-# Window Containers
+---
+layout: post
+title:  "Window Containers"
+date:   2024-03-16 20:00:00 +0930
+---
 
 This is a dive into using Windows Containers without Docker. The starting point
 of this was evaluating the [Host Compute System][0] (HCS) of Microsoft Windows. HCS
