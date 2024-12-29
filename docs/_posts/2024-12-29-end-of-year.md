@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "End of Year 2024"
-date:   2024-12-29 11:00:00 +0930
+date:   2024-12-29 11:00:00 +1030
 ---
 Closing out the year 2024. An overview on some things I did, played and watched
 this year.
