@@ -85,7 +85,7 @@ Building a image layer for Windows container required two extra PAX headers.
   file. The values I used came straight from [buildkit](8).
 
 While it didn't seem to have any negative affect, the permissions in the tar
-simply said if the member/entry was a directory or not (i.e. set no 
+simply said if the member/entry was a directory or not (i.e. set no
 read/write or execute bit).
 
 ## Create the image manifest
@@ -165,7 +165,7 @@ one created with BuildKit.
   teh reference layer not being in the OCI image it was already available on
   the system. If the image was loaded onto another machine then it would
   have failed as the blob would have been missing.
-* Comparing the image tarball with 7-zip to see how the PAX headers wearere set
+* Comparing the image tarball with 7-zip to see how the PAX headers were set
   as well as permissions.
   * For the layer image tarball, I originally had read/write and execute set
     where the other image didn't.
