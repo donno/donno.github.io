@@ -130,5 +130,5 @@ Source
 [2]: https://mirageoscience-geoh5py.readthedocs-hosted.com/en/stable/content/geoh5_format/index.html
 [3]: https://en.wikipedia.org/wiki/Esri_grid
 [4]: https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/
-[5]: https://github.com/donno/warehouse51/blob/b3dbcc55fd0820b05f4ee451e74331df263b3972/bom/bom.py
-[6]: https://github.com/donno/warehouse51/blob/b3dbcc55fd0820b05f4ee451e74331df263b3972/bom/bom_solar_geoh5.py
+[5]: https://github.com/donno/warehouse51/blob/96a0661d82e5384ee40f88200cb01e67c8be8fef/bom/bom.py
+[6]: https://github.com/donno/warehouse51/blob/96a0661d82e5384ee40f88200cb01e67c8be8fef/bom/bom_solar_geoh5.py
