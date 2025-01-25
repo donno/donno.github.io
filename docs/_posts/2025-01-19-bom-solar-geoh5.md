@@ -58,7 +58,8 @@ in the context of drillholes and drillholes groups that I overlooked at the
 time). Looking at the API reference I expected it to be
 `group.add_children(grid)` but it turned out when you create the entity you
 must pass `parent=group,` to the `create()` function. I've provided this
-as feedback to them so hopefully that can be improved.
+as feedback to them so hopefully that can be improved. Update 2025-01-25: 
+`add_children()` works correct with 0.10.0 released yesterday.
 
 The other gotcha was adding the data as the `Grid2D.create()` creates
 the basic topology and geometry of the grid but doesn't handle associating the
