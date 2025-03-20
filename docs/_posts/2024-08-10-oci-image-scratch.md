@@ -6,9 +6,9 @@ date:   2024-08-10 20:00:00 +1030
 
 After looking into the recent addition of experimental support for Windows in
 `BuildKit` for `Containerd`, I decided to take a deep dive into seeing if I could
-create my own [OCI (Open Container Initiative)](0) image from Python.
+create my own [OCI (Open Container Initiative)][0] image from Python.
 
-The plan was to start with the [oci-python](1) project. I didn't get far wit
+The plan was to start with the [oci-python][1] project. I didn't get far wit
  it as it had a strange HTTP wrapper class which results in it looking
 too much like the caller is making HTTP requests themselves and thus wasn't
 providing the abstraction that I was looking for.
@@ -22,15 +22,15 @@ Starting with an overview over the components of an image by taking a look
 at an existing OCI image to see what goes into it there is:
 * oci_image.tar
     * oci-layout - JSON document containing `{"imageLayoutVersion":"1.0.0"}`
-    * index.json - [Image Index](3) containing an annotated list of manifests.
+    * index.json - [Image Index][3] containing an annotated list of manifests.
     * blobs/ - Directory
         * sha256/ - This directory is named after the digest algorithm, the
           other supported algorithm at this time is sha512.
             * digest-1 - tarball for first layer.
             * digest-2 - tarball for second layer.
-            * digest-3 - The [Image Manifest](4), which is a JSON Document
+            * digest-3 - The [Image Manifest][4], which is a JSON Document
               containing information about the layers.
-            * digest-4 - The [Image Configuration](5), which is contains
+            * digest-4 - The [Image Configuration][5], which is contains
               information about how the image was created as well as how to
               run it like the entry point / commands.
 
@@ -49,8 +49,8 @@ The different tasks that needed to be performed to construct the OCI image are:
 
 ## Fetching first layer
 
-As mentioned before, I started with [oci-python](1) for this part however
-quickly abandoned it in favour of using [requests](6) to handle the HTTP
+As mentioned before, I started with [oci-python][1] for this part however
+quickly abandoned it in favour of using [requests][6] to handle the HTTP
 requests myself. I had previously looked querying Microsoft's container registry
 before so I already had a starting point for the API.
 
@@ -82,7 +82,7 @@ Building a image layer for Windows container required two extra PAX headers.
 * MSWINDOWS.fileattr which is "32" for a regular file, and "16" for a directory.
 * MSWINDOWS.rawsd which is a special encoding of the security descriptor, which
   you can think of it as the owner, group and permissions associated with the
-  file. The values I used came straight from [buildkit](8).
+  file. The values I used came straight from [buildkit][8].
 
 While it didn't seem to have any negative affect, the permissions in the tar
 simply said if the member/entry was a directory or not (i.e. set no
@@ -93,7 +93,7 @@ The media type for this is application/vnd.oci.image.manifest.v1+json.
 
 The two things this JSON document provides are the:
 - List of layers (the digest, size and media type of each layer) which the
-  object in the JSON is called a ["descriptor"](9).
+  object in the JSON is called a ["descriptor"][9].
 * The digest and size of the blob that represents the image configuration,
   which hasn't been tackled yet, so that is the next part.
 
@@ -169,8 +169,8 @@ one created with BuildKit.
   as well as permissions.
   * For the layer image tarball, I originally had read/write and execute set
     where the other image didn't.
-* Comparing the two images with [Skopeo](10) to see where the differences
-  lie. For Windows there is [WinSkopeo](11) which generates builds from the
+* Comparing the two images with [Skopeo][10] to see where the differences
+  lie. For Windows there is [WinSkopeo][11] which generates builds from the
   former project specially for Windows.
     * This highlighted that the `ENV` section should have had  `PATH` set
       to C:\Windows\System32 and C:\Windows..
