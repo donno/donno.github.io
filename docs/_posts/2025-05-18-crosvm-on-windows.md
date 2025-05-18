@@ -199,6 +199,32 @@ Requesting system poweroff
 [  153.861722] reboot: Power down
 ```
 
+Alternative
+-----------
+An alternative way to test that `crosvm` works without needing a Linux kernel and image,
+provided to `crosvm` as the image is to use [Memtest86+][7].
+Download the "Binary Files" (.bin/.eif) and the `memtest64.bin` file can be provided
+as the image.
+
+Run it with `.\crosvm.exe run --cpus 2 --mem 512 memtest64.bin`
+
+````
+      Memtest86+ v7.00      | Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz
+CLK/Temp: 4008MHz           | Pass 37% ##############
+L1 Cache:   32KB   245 GB/s | Test 74% #############################
+L2 Cache:  256KB   101 GB/s | Test #6  [Moving inversions, 64 bit pattern]
+L3 Cache:    8MB  33.7 GB/s | Testing: 4MB - 512MB [508MB of 511MB]
+Memory  :  512MB  19.6 GB/s | Pattern: 0x0000000000008000
+--------------------------------------------------------------------------------
+CPU: 1 Cores 2 Threads    SMP: 2T (PAR)   | Time:  0:03:58  Status: Pass     -
+```
+
+This has the advatange of checking the CPU count works, as above `--cpus 2` results in
+1 core with 2 threads where using `--cpus 4` results in 2 cores with 4 threads.
+```
+CPU: 2 Cores 4 Threads    SMP: 4T (PAR)   | Time:  0:00:24
+```
+
 Summary
 -------
 Great little project as the resulting binaries are about 12MB.
@@ -223,6 +249,7 @@ Future
 
 If you want to learn more than about crosvm then check out Daniel Prilik's post on [the subject][6].
 
+
 [0]: https://crosvm.dev/book/
 [1]: https://chromium.googlesource.com/crosvm/crosvm/
 [2]: https://learn.microsoft.com/en-us/virtualization/api/hypervisor-platform/hypervisor-platform
@@ -230,3 +257,4 @@ If you want to learn more than about crosvm then check out Daniel Prilik's post 
 [4]: https://github.com/marcov/firecracker-initrd
 [5]: https://launchpad.net/ssh-import-id
 [6]: https://prilik.com/blog/post/crosvm-paravirt/
+[7]: https://memtest.org/
