@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "CrosVM on Windows"
-date:   2025-01-18 16:00:00 +1030
+date:   2025-05-18 16:00:00 +1030
 ---
 
 This weekend's little project was looked at playing with the [crosvm project][0] on
