@@ -259,8 +259,12 @@ boot Alpine in a virtual machine with networking was achieved.
 
 The scripts created for this post is at [this gist](6).
 
-## Next
-* Replace the `chroot` usage with the linking as done for hte other services.
+## Next / missing
+* There is no package mirror set-up. This is easily fixed by running
+ `setup-apkrepos` if you need to. If I need it, I would probably make it so you
+  can choose the configuration at build-time. That way I could choose to use the
+  mirror I have set-up or at least use a mirror from Australia.
+* Replace the `chroot` usage with the linking as done for the other services.
 * Unwravel `alpine-base` package into its parts.
 * Possibly extend the script to create user accounts and set-up their
   authorised key.
