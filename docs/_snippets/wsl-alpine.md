@@ -53,6 +53,32 @@ The filesystem of the WSL distribution can be accessed through Windows
 Explorer via: `\\wsl.localhost\Alpine318`, that is to say via
 `\\wsl.localhost\<name>` provided the distribution is running.
 
+The IP address of the host can be queried with:
+```sh
+ip route show | grep -i default | awk '{ print $3}'
+```
+This snippet is from the [WSL Networking][4] page.
+
+## ALpine 3.22 update
+
+Differences
+* Created it on a different drive
+* Created it with a fixed size disk image.
+
+```
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/alpine-minirootfs-3.22.0-x86_64.tar.gz
+wsl --install --fixed-vhd --vhd-size 10G --location D:\vms\wsl\alpine322 --name "Alpine 3.22" --from-file alpine-minirootfs-3.22.0-x86_64.tar.gz
+```
+
+```sh
+dh -h
+/dev/sdf                  9.7G      8.7M      9.2G   0% /
+
+# I installed the following packages:
+apk add openrc openrc-user nano
+```
+
 [1]: https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/x86_64/alpine-minirootfs-3.18.0-x86_64.tar.gz
 [2]: https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user
 [3]: https://superuser.com/a/1627461
+[4]: https://learn.microsoft.com/en-us/windows/wsl/networking
