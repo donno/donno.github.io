@@ -164,6 +164,46 @@ Writing manifest to image destination
   ./apk.static  --allow-untrusted -X https://dl-cdn.alpinelinux.org/alpine/latest-stable/main add nano
   ```
 
+## Wolfi - Root File-system (Update 2025-06-26)
+This creates a WSL2 distribution using Wolfi from Chainguard.
+
+This one I simply set-up as a single command call to keep it all self-contained.
+Otherwise, I would have considered having a "build.sh" and putting that in
+current folder and utilise the mount to have that file in the container and
+run it.
+
+```sh
+podman run --rm -v .:/host --entrypoint /bin/sh docker.io/chainguard/wolfi-base -c "/usr/bin/apk --arch x86_64 -X https://apk.cgr.dev/chainguard/ -U --allow-untrusted --root /rootfs --initdb add wolfi-base chainguard-keys mount && touch /rootfs/etc/fstab && tar c -z -C /rootfs  --numeric-owner -f /host/wolfi.tar.gz ."
+wsl --install --name "MyWolfi" --from-file .\wolfi.tar.gz
+```
+
+The first issue issue was:
+```
+wsl: Processing /etc/fstab with mount -a failed.
+wsl: Failed to mount C:\, see dmesg for more details.
+...
+wsl: Failed to translate '<item in %PATH% from Windows>'
+... Same as above repeated for each directory in %PATH%.
+```
+Running `dmesg` it shows:
+```
+[ 7536.455675] WSL (2 - init(MyWolfi)) ERROR: UtilCreateProcessAndWait:685: /bin/mount failed with 2
+[ 7536.456840] WSL (1 - init(MyWolfi)) ERROR: UtilCreateProcessAndWait:707: /bin/mount failed with status 0xff00
+```
+
+The problem here is /bin/mount doesn't exist. In Alpine, /bin/mount is linked to /bin/bbsuid.
+The solution was add `mount` in addition to `wolfi-base`.
+
+The issue is apk's repositories file is missing, so you can't add any extra
+packages (you could manually add the `/etc/apk/repositories` with the contents)..
+Initially there was the issue where the signature for it were missing too (so
+the `--allow-untrusted` argument needs to be used). That problem was addressed by
+adding the `chainguard-keys` package.
+
+An alternative to using the Chainguard distribution would be use
+`https://packages.wolfi.dev/os/<arch>`, which if this was used the `wolfi-keys`
+package needs to be installed.
+
 ## Expectation
 
 I am planning on updating this post if I complete the future work, rather than
