@@ -61,6 +61,109 @@ NAME PID       STATUS   BUNDLE PATH                             CREATED         
 bb-1 266       running  /opt/busybox-container                  2025-06-14T04:35:18.265240Z    root
 ```
 
+## Filesystem writing with overlay FS
+This section was added 2025-07-05.
+
+If you simply, change `root.readonly` to true, it means any changes when running
+will be written back to the `rootfs` so you would need to make a new `rootfs`
+each time you want a fresh copy.
+
+For this we will create an overlay filesystem similar to how higher-level
+container runtimes deal with it.
+
+There are four parts to mounting an overlay file system.
+- Lower directory - this is read-only access and is the base layer. In this case
+  this will be the `rootfs` directory created above.
+- Upper directory - this is where modifications will be stored. This will be a
+  new directory, lets call it `goofy_davinci`.
+- Working directory - where work in progress is written before being written to
+  the upper directory, this will be `goofy_davinci-work`.
+- Mount point - the directory where the filesystem will be mounted.
+
+In this case you can think of the lower directory being a single-layer
+container image, the upper directory is the file system for the particular
+container instance.
+
+```sh
+mkdir /opt/busybox-container/goofy_davinci /opt/busybox-container/goofy_davinci-work /opt/busybox-container/goofy_davinci-merged
+mount -t overlay overlay -o lowerdir=/opt/busybox-container/rootfs,upperdir=/opt/busybox-container/goofy_davinci,workdir=/opt/busybox-container/goofy_davinci-work /opt/busybox-container/goofy_davinci-merged
+```
+
+So if you wanted to take the same base image and run another instance you could do:
+```sh
+mkdir  /opt/busybox-container/gifted_jepsen /opt/busybox-container/gifted_jepsen-work
+mount -t overlay overlay -o lowerdir=/opt/busybox-container/rootfs,upperdir=/opt/busybox-container/gifted_jepsen,workdir=/opt/busybox-container/gifted_jepsen-work /opt/busybox-container/gifted_jepsen-merged
+```
+
+Open the `conifg.json` and change `root.path` to `goofy_davinci-merged` and
+`root.readonly` from `true` to `false`.
+
+Now lets run it with:
+```sh
+runc run goofy_davinci
+```
+
+Within the container create some folders / files:
+```sh
+mkdir -p /hello/world
+date >> /hello/world/today
+exit
+```
+
+Now on the host, you should have
+`cat /opt/busybox-container/goofy_davinci/hello/world/today` which will output
+the current date and time.
+
+The alternative to this is to use mount points so you can add content from the
+host and then do it.
+
+## File system writing with mounts
+This section was added 2025-07-05.
+
+This set-up gives you a path which you can write to within the container,
+similar to the `--volume` argument on high level container engines such as
+Podman and Docker.
+
+### Set-up
+Create the directory where we will be mounting.
+Populating it with some files for later.
+```sh
+mkdir /root/from_container
+echo "root says hello" >> /root/from_container/hello
+```
+
+Next modifiy the `config.json` to add the mount point, within the `mounts`
+array, add the following item and remmeber to add comma into the array as
+needed.
+
+```json
+{
+        "destination": "/host",
+        "type": "none",
+        "source": "/root/from_container",
+        "options": ["rbind","rw"]
+}
+```
+
+This will mount the `"/root/from_container` directory within the container as
+`/host` with read-write access.
+
+### Run
+
+```sh
+crun run bb-1
+```
+
+Within the container run:
+```sh
+# cat /host/hello
+root says hello
+# echo "container says bye" >> /host/bye
+# exit
+```
+Now outside the contain if you `cat /root/from_container/bye` it should say
+`container says bye`.
+
 ## Windows
 
 I came across `runhcs` which as Microsoft mentions on their
