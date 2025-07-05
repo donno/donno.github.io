@@ -22,17 +22,15 @@ This is simply to check the basics work.
 
 ### Containerfile.alpineroot
 ```Containerfile
-
-
-#FROM public.ecr.aws/docker/library/busybox:unstable-musl
-# Can't use busybox container as it lacks the SSL certs.
-
 FROM public.ecr.aws/docker/library/alpine:3.22.0
 ARG MIRROR=https://dl-cdn.alpinelinux.org/alpine/latest-stable/
 ADD --chmod=0755 https://gitlab.alpinelinux.org/api/v4/projects/5/packages/generic/v2.14.10/x86_64/apk.static /apk.static
 RUN /apk.static --arch x86_64 -X $MIRROR/main -X $MIRROR/community -U --allow-untrusted --root /rootfs --initdb add alpine-base
 RUN tar c -z -C /rootfs  --numeric-owner -f /alpine-rootfs.tar.gz .
 ```
+
+The original plan was to use `public.ecr.aws/docker/library/busybox:unstable-musl`
+as the base container however the busybox container lacks the SSL certs.
 
 ### Usage
 ```
