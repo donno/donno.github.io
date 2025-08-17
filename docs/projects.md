@@ -76,6 +76,7 @@ I built a simple website using the
 [Atlassian User Interface](https://aui.atlassian.com/) framework.
 
 **API Example**
+
 | URI           | Description   |
 | ------------- |:-------------:|
 | /api/repos/{repo-name} | Summary of that repo. |
