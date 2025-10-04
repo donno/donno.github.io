@@ -60,7 +60,7 @@ domain names and thus downloading packages. I'm writing this a two days after
 this part of the experience and it has me wondering why do it this way. The
 easier thing would have been to keep `apk.static` outside `/rootfs` and
 install into the folder as it can do that. This already proved to work from
-when creating the [barebone containers](5).
+when creating the [barebone containers][5].
 
 ## mkinitfs - Second attempt
 Next time, I tackled it differently and this time by running apk outside.
@@ -257,7 +257,7 @@ instead of `manual` use `dhcp`.
 The goal of scripting the creating of an initial RAM disk that can be used to
 boot Alpine in a virtual machine with networking was achieved.
 
-The scripts created for this post is at [this gist](6).
+The scripts created for this post is at [this gist][6].
 
 ## Next / missing
 * There is no package mirror set-up. This is easily fixed by running
