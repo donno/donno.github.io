@@ -34,9 +34,17 @@ from [GitHub][2].
 
 ### Downloads
 
+x86_64
 ```sh
 wget -O vmlinux https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.13/x86_64/vmlinux-6.1.141
 wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.13/x86_64/ubuntu-24.04.squashfs
+```
+
+Generic - this one would work on `aarch64` and `x86_64`.
+```sh
+ARCH=$(uname -m)
+wget -O vmlinux "https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.13/$ARCH/vmlinux-6.1.141"
+wget "https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.13/$ARCH/ubuntu-24.04.squashfs"
 ```
 
 ### Prepare Root File System
@@ -50,12 +58,12 @@ the `authorized_keys` with the keys of your choice.
 unsquashfs ubuntu-24.04.squashfs
 wget -O squashfs-root/root/.ssh/authorized_keys https://github.com/donno.keys
 chown -R root:root squashfs-root
-truncate -s 1G ubuntu-24.04.ext4
+truncate -s 1G ubuntu.rootfs.ext4
 mkfs.ext4 -d squashfs-root -F ubuntu.rootfs.ext4
 ```
 
 ### Configuration
-
+The configuration that follows is stored in a file called `ubuntu.config`.
 ```json
 {
   "boot-source": {
@@ -113,7 +121,7 @@ The `kvm_intel` is if your CPU is Intel, otherwise there is a `kvm_amd`.
 ## Running
 
 ```sh
-rm /tmp/fire.socket && firecracker --config-file foo.config  --api-sock /tmp/fire.socket
+rm /tmp/fire.socket && firecracker --config-file ubuntu.config  --api-sock /tmp/fire.socket
 ```
 
 If successful it will show something like this:
@@ -190,7 +198,7 @@ With
 Now run the VM again:
 
 ```sh
-rm /tmp/fire.socket && firecracker --config-file foo.config  --api-sock /tmp/fire.socket
+rm /tmp/fire.socket && firecracker --config-file ubuntu.config  --api-sock /tmp/fire.socket
 ```
 
 Next is setting up the VM.
@@ -236,9 +244,105 @@ ip=10.200.0.2::10.200.0.1:255.255.255.255::eth0:off"
 ```
 
 Where the format is `[Guest IP]::[TAP IP]:[Long mask of guest CIDR]::[GuestInterface]`.
+The official documentation is found at [Documentation/filesystems/nfs/nfsroot.txt][9]
+in the kernel. The feature was originally for NFS but was generalised (renamed
+from nfsaddrs to ip).
+When I came across this I discovered its possible for the DNS servers to be
+provided.
 
 ```
 "boot_args": "console=ttyS0 reboot=k panic=1 pci=off ip=10.200.0.2::10.200.0.1:255.255.255.255::eth0:off"
+```
+
+# Experiment
+
+## Benchmarking
+
+Start a HTTP server:
+```sh
+apk add uv
+uv run -m http.server 15055
+```
+
+Before running running firecracker call:
+```sh
+curl --silent --head http://127.0.0.1:15055/launch > /dev/null
+
+# For example:
+rm /tmp/fire.socket && curl --silent --head http://127.0.0.1:15055/launch > /dev/null && firecracker --config-file ubuntu.config  --api-sock /tmp/fire.socket
+```
+
+Update the rootfs to include an extra line in the root file system to query the
+HTTP server that is running on the host.
+```sh
+echo "curl --silent --head http://10.200.0.1:15055/bash_init > /dev/null" >> squashfs-root/root/.bashrc
+mkfs.ext4 -d squashfs-root -F ubuntu.rootfs.ext4
+```
+
+The server output
+```
+Serving HTTP on 0.0.0.0 port 15055 (http://0.0.0.0:15055/) ...
+127.0.0.1 - - [05/Oct/2025 17:29:17] code 404, message File not found
+127.0.0.1 - - [05/Oct/2025 17:29:17] "HEAD /launch HTTP/1.1" 404 -
+10.200.0.2 - - [05/Oct/2025 17:29:18] code 404, message File not found
+10.200.0.2 - - [05/Oct/2025 17:29:18] "HEAD /bash_init HTTP/1.1" 404 -
+```
+
+With minimal implementation of server to change how the time is printed, we
+can get the nanoseconds. An implementation which handled the `/launch` and
+`/bash_init` requests and computed the time since launch was considered but I
+didn't intend to collect multiple samples.
+
+```python
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import time
+
+class Handler(SimpleHTTPRequestHandler):
+    def log_date_time_string(self):
+      return str(time.monotonic_ns())
+
+if __name__ == "__main__":
+    httpd = HTTPServer(('', 15055), Handler)
+    httpd.serve_forever()
+```
+With the revisited output.
+```
+127.0.0.1 - - [30898397784530] "HEAD /launch HTTP/1.1" 404 -
+10.200.0.2 - - [30899655117847] "HEAD /bash_init HTTP/1.1" 404 -
+127.0.0.1 - - [31139610356885] "HEAD /launch HTTP/1.1" 404 -
+10.200.0.2 - - [31140904802901] "HEAD /bash_init HTTP/1.1" 404
+```
+
+So with those two it is 1294.446ms and 1267.333ms across two runs.
+
+## Alpine
+```sh
+wget https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/x86_64/netboot-3.22.1/initramfs-virt
+rm /tmp/fire-alpine.socket && firecracker --config-file alpine.config  --api-sock /tmp/fire-alpine.socket
+```
+
+This doesn't use the kernel from Alpine due to the fact it is compressed kernel
+and Firecracker needs the uncompressed kernel.
+
+* The [extract-vmlinux][7] script from the Linux kernel repository does not
+  work with [BusyBox][8].
+  * It needs GNU grep, which is easy to install via `apk add grep`
+  * Its use of `mktemp` is different as it uses XXX where BusyBox requires XXXXXX.
+    This wouldn't be too difficult to provide a `sed` line to tweak.
+  * Some other unknown issue.
+
+The network failed to get set-up automatically despite using hte same tun and
+ip kernel configuration as last time. I switched to using the `initrdfs.wnet`
+from the post I did for creating a `initrd` for Alpine. The network didn't
+work out-of-box, I had to fallback to the manual commands to assign the IP etc
+and it was able to ping 8.8.8.8.
+
+The Alpine virtual machine is unable to resolve domains via DNS, which I don't
+believe I had a problem with when using QEMU.
+
+Running the following is fine, so there is some issue with the configuration.
+```sh
+nslookup google.com 8.8.8.8
 ```
 
 # Future
@@ -246,8 +350,9 @@ Where the format is `[Guest IP]::[TAP IP]:[Long mask of guest CIDR]::[GuestInter
 "Advanced: Multiple guests" section of the Firecracker [network setup][6] guide
 looks like a good starting point.
 * Sort out multiple guests in general
-* Try Alpine as the guest OS.
+* Get Alpine working as the guest OS - with networking pre-configured.
 * Try using `nftables` over `iptables`.
+* Look into the Firecracker [Jailer][10].
 
 [0]: http://firecracker-microvm.io/
 [1]: https://github.com/google/crosvm
@@ -256,3 +361,7 @@ looks like a good starting point.
 [4]: https://hans-pistor.tech/
 [5]: https://crosvm.dev/book/devices/net.html
 [6]: https://github.com/firecracker-microvm/firecracker/blob/main/docs/network-setup.md#on-the-host
+[7]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/scripts/extract-vmlinux
+[8]: https://busybox.net/
+[9]: https://www.kernel.org/doc/Documentation/filesystems/nfs/nfsroot.txt
+[10]: https://github.com/firecracker-microvm/firecracker/blob/main/docs/jailer.md
