@@ -1,10 +1,11 @@
 
-This weekend little project was creating a root file system image. The idea
-is to create file system that is bigger than what would be supported by the
+This weekend's little project was creating a root file system image. The idea
+is to create an image that is bigger than what would be supported by the
 initrd.
 
 ## Set-up
-The environment used for these instructions are Alpine.
+This project was performed from Alpine Linux.
+
 ```sh
 apk add e2fsprogs
 ```
@@ -12,16 +13,16 @@ apk add e2fsprogs
 * The `e2fsprogs` package provides the `mkfs.ext4` command for creating an
   `ext4` file system.
 
-## Preparing root fs
-
-The root file system will be prepared in a directory called `root-source`.
-
 If the host or container is not Alpine then download the statically linked
-version of `apk` (Alpine Package Keeper) called `apk.static`.
+version of `apk` (Alpine Package Keeper) called `apk.static` and use/try that.
 ```sh
 wget https://gitlab.alpinelinux.org/api/v4/projects/5/packages/generic/v2.14.10/x86_64/apk.static
 chmod +x apk.static
 ```
+
+## Preparing root fs
+
+The root file system will be prepared in a directory called `root-source`.
 
 ### Using Alpine
 
@@ -29,7 +30,7 @@ chmod +x apk.static
 apk --allow-untrusted -X https://dl-cdn.alpinelinux.org/alpine/latest-stable/main -U --allow-untrusted --root root-source --initdb add alpine-base
 ```
 
-A problem with this approach at the moment is the resulting image won't be
+A problem with this approach at this time is the resulting image won't be
 bootable. There is no boot loader installed and no provision for EFI either.
 This makes this only suitable for the direct boot option. Thus this requires
 a virtualisation platform where you can boot the kernel image directly.
@@ -40,13 +41,17 @@ I would like to come back to this another day as the main motivation for using
 
 ### Using Wolfi from Chainguard
 
-For this case lets start with the initial problems with the initial attempt.
+_Spoiler_: I didn't end-up with a working system using this approach. This
+is likely to be expected as Wolfi is meant for containers only unlike Alpine.
+
+For this case lets start with the initial problems encountered during
+the first few attempts at getting this working.
 
 The first was Wolf lacks an `init` system so it fails. To overcome this the
 following command was added `ln -sf /usr/bin/busybox root-source/usr/bin/init`
 to instruct it to use `busybox` as the `init` system.
 
-However, it failed with:L
+However, it failed with:
 ```
 [    5.063946] traps: sh[1] trap invalid opcode ip:723d6d5180d0 sp:7ffda96f5400 error:0 in ld-linux-x86-64.so.2[200d0,723d6d4f9000+29000]
 [    5.075462] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000004
@@ -83,20 +88,20 @@ Starting sysinit runlevel
 Next set of issues:
 * `/etc/fstab does not exist`
 * `/usr/lib/rc/sh/openrc-run.sh: line 64: hwclock: not found`
-** This is include in the `util-linux-misc` package.
+    * This is include in the `util-linux-misc` package.
 * `/usr/lib/rc/sh/openrc-run.sh: line 96: fsck: not found`
-** This is include in the `util-linux-misc` package.
+    * This is include in the `util-linux-misc` package.
 * `/usr/lib/rc/sh/openrc-run.sh: line 149: umount: not found`
-** This is include in the `umount` package.
+  ** This is include in the `umount` package.
 * `/usr/lib/rc/sh/openrc-run.sh: line 39: find: not found`
-** This is included in the `findutils` package.
+  * This is included in the `findutils` package.
 * `/usr/lib/rc/sh/openrc-run.sh: line 58: eend: not found`
 * `/usr/lib/rc/sh/openrc-run.sh: line 211: checkpath: not found`
-** This is included in the `openrc` package as `/usr/lib/rc/bin/checkpath`
+  * This is included in the `openrc` package as `/usr/lib/rc/bin/checkpath`
 * `/usr/lib/rc/sh/openrc-run.sh: line 156: grep: not found`
-** This is included in the `grep` package.
+  * This is included in the `grep` package.
 * `/usr/lib/rc/sh/openrc-run.sh: line 28: modprobe: not found`
-** This is included in the `kmod` package.
+  * This is included in the `kmod` package.
 
 I never did get this system properly booting.
 
@@ -108,6 +113,8 @@ ln -sf /sbin/openrc-init root-source/usr/bin/init
 * `openrc` for the init system.
 * `util-linux-misc` for `hwclock` and `fsck` used by `openrc`
 * `mount` for mounting file-systems.
+* Several packages were needed for the `openrc-run.sh` script, which were
+  mentioned above.
 
 ## Create the image
 ```sh
@@ -201,6 +208,9 @@ curl --unix-socket /tmp/fire-alpine.socket -X PUT 'http://localhost/actions' -H 
   that it supports setting-up extra users and configuring ssh access.
 
 ## Build from container
+
+This was a little experiment I wanted to try.
+
 For this we will try:
 * valkey/valkey:8.1.4-alpine3.22 as the container
 * umoci  as the tool
@@ -274,7 +284,7 @@ whpx: injection failed, MSI (0, 0) delivery: 0, dest_mode: 0, trigger mode: 0, v
 qemu-system-x86_64.exe: WHPX: Unexpected VP exit code 4
 ```
 
-As a result he start time for the image was about 90 seconds which I believe
+As a result the start time for the image was about 90 seconds which I believe
 attributed to not being able to use the visualisation acceleration option.
 
 Overall neat, however my interest is not so much building a image for a new
@@ -391,8 +401,5 @@ automatically use it as a cache (it will format it as needed).
 [8]: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/generating-a-custom-minimal-base-image
 [9]: https://github.com/composefs/composefs
 [10]: https://gitlab.freedesktop.org/gfx-ci/boot2container
----
 
-
-# skopeo copy docker://opensuse/amd64:42.2 oci:opensuse:42.2
 
