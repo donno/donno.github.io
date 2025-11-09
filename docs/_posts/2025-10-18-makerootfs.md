@@ -1,3 +1,8 @@
+---
+layout: post
+title:  "Making rootfs"
+date:   2025-10-18 15:00:00 +0930
+---
 
 This weekend's little project was creating a root file system image. The idea
 is to create an image that is bigger than what would be supported by the
@@ -389,6 +394,12 @@ on a secondary boot volume.
 
 Not shown here is it supports adding a disk drive and telling it to
 automatically use it as a cache (it will format it as needed).
+
+## Conclusion
+
+* I got too distracted by Wofli that I neglected fininshing up Alpine support.
+* The `boot2container` project looked very promising but I would sitll like to
+  try my own spin on it if I get a chance.
 
 [0]: {% post_url 2025-05-22-initrd-alpine %}
 [1]: https://firecracker-microvm.io/
