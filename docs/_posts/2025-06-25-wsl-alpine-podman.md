@@ -171,7 +171,7 @@ current folder and utilise the mount to have that file in the container and
 run it.
 
 ```sh
-podman run --rm -v .:/host --entrypoint /bin/sh docker.io/chainguard/wolfi-base -c "/usr/bin/apk --arch x86_64 -X https://apk.cgr.dev/chainguard/ -U --allow-untrusted --root /rootfs --initdb add wolfi-base chainguard-keys mount && touch /rootfs/etc/fstab && tar c -z -C /rootfs  --numeric-owner -f /host/wolfi.tar.gz ."
+podman run --rm -v .:/host --entrypoint /bin/sh docker.io/chainguard/wolfi-base -c "/usr/bin/apk --arch x86_64 -X https://apk.cgr.dev/chainguard/ -U --allow-untrusted --root /rootfs --initdb add wolfi-base chainguard-keys mount umount && touch /rootfs/etc/fstab && tar c -z -C /rootfs  --numeric-owner -f /host/wolfi.tar.gz ."
 wsl --install --name "MyWolfi" --from-file .\wolfi.tar.gz
 ```
 
@@ -190,7 +190,9 @@ Running `dmesg` it shows:
 ```
 
 The problem here is /bin/mount doesn't exist. In Alpine, /bin/mount is linked to /bin/bbsuid.
-The solution was add `mount` in addition to `wolfi-base`.
+The solution was add `mount` in addition to `wolfi-base`. While its not required
+for starting the distribution, it seemed like a good idea to also include
+`umount` to be able to unmount a file-system.
 
 The issue is apk's repositories file is missing, so you can't add any extra
 packages (you could manually add the `/etc/apk/repositories` with the contents)..
