@@ -46,7 +46,7 @@ The chunks are arranged in the following order:
 * Sounds
 
 **TODO**: Cover how to decode thw wall textures
-**TODO**: Fininsh writing up about this.
+**TODO**: Finish writing up about this.
 
 ## Commander Keen 4
 
