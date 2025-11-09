@@ -92,6 +92,17 @@ More details are listed on [Gaming][/gaming.html].
   once the massive plot device came along and turned it into a story I could
   not put down. I am however undecided if I will continue the series as while
   this forms part of the "Watch Novels" it is very late in that timeline.
+* Codex Alera series - Jim Butcher.\
+  Starts with slowly introducing the world and starts off unclear who the 
+  protagonist of the series is. It took me a while to read through the first
+  book, bit quicker on the next, but then from about the third book onwards I
+  picked up the pace and wouldn't put it down. It follows multiple characters
+  which reminded me of the later Vorkosigan books and it means you aren't only
+  experience the world from one perspective. I did find it difficult to follow
+  the time of time in the series as it was unclear to me what was happening at
+  the same time as well as naturally getting sense of how long certain travel
+  takes. Overall, the conclusion of the series is satisfying and a very natural
+  place to end.
 
 Other books I've read in 2020s were:
 - City of Bones by 	Cassandra Clare - The first in the Shadow Hunter series
