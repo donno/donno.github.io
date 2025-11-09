@@ -29,7 +29,7 @@ Distributor ID: Chimera
 Description:    Chimera Linux
 Release:        rolling
 Codename:       chimera
-```
+``` 
 
 # Export container filesystem to tar.
 ```
@@ -39,3 +39,17 @@ podman export plain_busybox --output busybox.tar
 ```
 Using the import rootfs tarball above you can use that to go from a
 Container Image to Container to tarball to WSL distribution.
+
+# Convert OSM to Versatiles
+My initial thoughts on Versatiles is it seems to be re-inventing the wheel
+because they have some disagreement about the existing wheel.
+
+For OpenMapTiles schema verse Shortbread it seems to come down the the former
+having an Attribution clause as its licensed CC-BY where the latter is CC0.
+
+```
+podman run --rm --privileged -it -v G:\GeoData\Generated\OSM:/app/result ghcr.io/versatiles-org/versatiles-tilemaker:v0.7.3 generate_tiles.sh https://download.geofabrik.de/australia-oceania/australia-240426.osm.pbf australia-240426 "459.04,-47.21,523.92,-8.44"
+```
+
+The `--privileged` is needed to use the ramdisk option.
+The above doesn't work,
