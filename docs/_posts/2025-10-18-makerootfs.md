@@ -39,10 +39,10 @@ A problem with this approach at this time is the resulting image won't be
 bootable. There is no boot loader installed and no provision for EFI either.
 This makes this only suitable for the direct boot option. Thus this requires
 a virtualisation platform where you can boot the kernel image directly.
-[Firecracker](1), [crosvm](3) and [QEMU](2) can all do this.
+[Firecracker][1], [crosvm][3] and [QEMU][2] can all do this.
 
 I would like to come back to this another day as the main motivation for using
-[initrd](0) last time was to side-step this problem.
+[initrd][0] last time was to side-step this problem.
 
 ### Using Wolfi from Chainguard
 
@@ -250,8 +250,8 @@ drive and image.
 
 ## BootC
 
-The [`bootc` project](5) is working the mission of [Bootable Container Images](6).
-In short, its about providinng operationg system updates using OCI container
+The [`bootc` project][5] is working the mission of [Bootable Container Images][6].
+In short, its about providing operating system updates using OCI container
 images and reusing the tooling around containers for building images.
 
 ### Features
@@ -299,13 +299,13 @@ without the full container infrastructure (i.e. containerd, Podman, Docker).
 
 I would be keen to revisit it for building Alpine images however it doesn't
 seem that is possible and from looking a little into it it seems the main thing
-that `bootc` utilises is [`ostree`](7) and I'm not sure how compatible Alpine is with
+that `bootc` utilises is [`ostree`][7] and I'm not sure how compatible Alpine is with
 that. Given my original project was to investigate building pre-built Alpine
 images `bootc` for that does seem nice as it brings the familiarity of a
 `Containerfile` to the process. I however find often the `Containerfile` format
 to be limiting and thus you end up needing to resort to shell scripts anyway.
 
-For more on `bootc` see the [Creating bootc images from scratch](8) in the
+For more on `bootc` see the [Creating bootc images from scratch][8] in the
 Red Hat Enterprise Linux documentation.
 
 
@@ -333,7 +333,7 @@ This is a bonus section that I looked into before I published this, essentially
 I discovered a project which essentially does the kernel + initrd with podman
 and configure which container to pull and run via the kernel command line.
 
-The project in question is [boot2container](10).
+The project in question is [boot2container][10].
 
 ```sh
 curl -OL https://gitlab.freedesktop.org/gfx-ci/boot2container/-/releases/v0.9.17/downloads/initramfs.linux_amd64.cpio.xz
