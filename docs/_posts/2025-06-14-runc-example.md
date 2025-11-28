@@ -170,7 +170,7 @@ I came across `runhcs` which as Microsoft mentions on their
 [container platform tools page][2], `runhcs` is the Windows container host
 counterpart to runc.
 
-A quick heads-up, I don't get working.
+A quick heads-up, I don't get it working.
 
 It a fork of `runc` for running applications packaging according to OCI format
 however it runs natively on Microsoft Windows and can run either Windows or
