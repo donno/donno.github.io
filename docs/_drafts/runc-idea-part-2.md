@@ -4,38 +4,40 @@ title:  "runc idea - part 2"
 date:   2025-11-30 23:10:00 +0930
 ---
 
-This continues the container idea using runc started in [part 1](0) where the 
-idea was to turn container images into applications or more likely services..
+This continues the container idea using runc started in [part 1](0) where the
+idea was to turn container images into applications or more likely services.
 Last time, the OCI image was turned into an OCI bundle that was runnable with
 runc. The problem was the networking wasn't configured to allow the host to
-talk to the service running in teh container.
+talk to the service running in the container.
 
-The starting point is to consider the Container Network Interface (CNI, which
+The starting point is to consider the Container Network Interface (CNI), which
 has the tag line of "networking for Linux containers". Other ideas is to check
 to see if [iptables](2) or [nftables](3) (which is the intended as the
-replacemnet for the former tools). The question I would like answered is does
+replacements for the former tools). The question I would like answered is does
 `iptables` or `nftables` enable us to forward ports from the localhost interface
 within the container to the host.
 
 ## Re-starting
 
-When starting this one, I reran the commands from part 1 on a new install
-except I was a reguarly user this time instead of root.
-The problem I ran into is either if the normal user owned /opt/containers then
-`umoci` would fail to unpack there with the following error:
+When starting this one, I reran the commands from part 1 on a new fresh install
+of Alpine Linux except I was a regularly user this time instead of root.
+This proved to be problematic as while /opt/containers was opened by the
+regular user, `umoci` would fail to unpack there with the following error:
 ```
    • umoci encountered a permission error: maybe --rootless will help?
    x create runtime bundle: unpack rootfs: chown rootfs: lchown /opt/containers/valkey-9.0.0/rootfs: operation not permitted`
 ```
 
-I tried it again with the `--rootless` and what it does is it doesn't try to
-change the owner to `root` as it is in the layer tarballs.
+By adding the `--rootless` argument to `umoci` what it does is it doesn't try
+to change the owner to `root` as it is in the layer tarballs and therefore
+allows it to be created.
 
 The [documentation](4) of rootless option of `umoci` mentions
 > umoci also supports the user.rootlesscontainers specification, which allows for further emulation of things like chown(2) inside rootless containers using tools like PRoot.
 
-That sounds as if it may be a solution to the problem where the valkey container
-wants to chown everything to valkey, so will need to look into that later.
+That sounds as if it may be a solution to the problem where the valkey
+container wants to change the owner (run `chown`) of everything to valkey, so
+that needs to be looked into later.
 
 When running the container, since it tried to do the chown stuff that still
 failed but using an existing user ID also failed such as 5 for `sync`.
@@ -46,19 +48,21 @@ ERRO[0000] runc run failed: unable to start container process: error during cont
 
 Possibly need to run `newgidmap` or `newuidmap`, but unsure, in the end I set
 the uid and gid back to 0 and simply modified
-`rootfs/usr/local/bin/docker-entrypoint.sh` to skip the chown and it ran.
+`rootfs/usr/local/bin/docker-entrypoint.sh` to skip the `chown` and it ran.
 
-This time the networking working, however before testing connecting to the
+This time the networking worked, however before testing connecting to the
 server, a problem was discovered. Starting a second container failed because
 it said the port was already in use, which suggests the networking isn't in its
 own namespace. Running the `valkey-cli` worked, at first I thought it was 
 because it was installed on the host rather than using the `chroot` approach
 done last time but both that and the `chroot` worked.
 
-I then when back to the original enviroment and sure enough under that I could
-run two balkeys on same port and `runc run vk-3` and `runc run vk-1`.
+I then when back to the original environment and sure enough under that I could
+run two `valkey-server` on same port via `runc run vk-3` and `runc run vk-1`.
+This indeed worked and the second run didn't conflict with the port in the
+first.
 
-The difference was the orignal system was Wolfi where the second system was
+The difference was the original system was Wolfi where the second system was
 Alpine 3.22. Comparing the OCI runtime specification for the two systems,
 in the Wolfi one it has `network` namespace listed but the Alpine one didn't,
 instead it has the type `user` likely because of the `--rootless`.
@@ -71,10 +75,9 @@ Testing using `nsenter`, to run `valkey-cli` within the container. The first
 step is to find the PID of the `valkey-server` via `ps`, then enter the
 namespace of that process with `nsenter -t <pid> valkey-cli`. This raised an
 error `Could not connect to Valkey at 127.0.0.1:6379: Connection refused`. Try
-again this time add `-n` argument to nsenter which causes it to enter the
+again this time add `-n` argument to `nsenter` which causes it to enter the
 network namespace and that works. This experiment provides a new idea, use
 `socat` to essentially folder data to the namespace.
-
 
 Now this has brought us back to base where networking is namespaced, can look
 at the networking options.
@@ -90,10 +93,10 @@ In this case, nsenter is used to run the command in the same network namespace
 as the Valkey process.
 ```sh
 nsenter -t $(runc state vk-2 | jq ".pid") -n socat UNIX-LISTEN:/tmp/socket TCP:127.0.0.1:6379
-````
+```
 The reason `runc exec` can't be used here is it would require `socat` exist
-within the root file system of the container. This commadn therefore won't work
-unless socat was added to the `rootfs` directory in a directory inclided in
+within the root file system of the container. This command therefore won't work
+unless `socat` was added to the `rootfs` directory in a directory included in
 `$PATH`.
 ```sh
 runc exec vk-3 socat UNIX-LISTEN:/tmp/socket TCP:127.0.0.1:6379
@@ -115,11 +118,10 @@ host and port.
 * Cons
     * Do need to know the port.
 
-
-This approach does seem easy to automate, especially with the hooks. 
+This approach does seem easy to automate, especially with the hooks.
 
 ### iproute2
-First things to relise is the `ip` command from BusyBox does not have the
+First things to account for is the `ip` command from BusyBox does not have the
 `netns` subcommand, so `iproute2` is needed to peruse that.
 
 Special thanks to Murat Kilic [article][6] about network setup with runc and
@@ -155,7 +157,7 @@ namespace name rather than PID. However, I suspect with a container hook this
 set-up can become part of that.
 
 Checking the working, by trying to ping the IP of the container from the host
-so in this case htat is `192.168.10.1`.
+so in this case that is `192.168.10.1`.
 
 You can also `ip -netns ctr_valkey_9.0.0 link ls` and
 `ip -netns ctr_valkey_9.0.0 addr` to help troubleshoot.
@@ -227,4 +229,3 @@ net.ipv6.conf.all.forwarding=1
 [5]: https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking
 [6]: https://medium.com/@Mark.io/https-medium-com-mark-io-network-setup-with-runc-containers-46b5a9cc4c5b
 [7]: https://serverfault.com/a/1178962
-
