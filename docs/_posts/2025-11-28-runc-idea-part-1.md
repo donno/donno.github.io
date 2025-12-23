@@ -47,6 +47,7 @@ Download the tools required.
 ```sh
 curl -LO https://github.com/opencontainers/umoci/releases/download/v0.6.0/umoci.linux.amd64
 curl -LO https://github.com/lework/skopeo-binary/releases/download/v1.20.0/skopeo-linux-amd64
+chmod +x umoci.linux.amd64 skopeo-linux-amd64
 ````
 It is a bit of a shame one uses dot and the other uses a minus sign.
 
