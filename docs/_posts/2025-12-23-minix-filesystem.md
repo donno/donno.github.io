@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Minix filesystem"
-date:   2025-12-23 23:10:00 +0930
+date:   2025-12-23 22:10:00 +0930
 ---
 
 After watching the talk ["50 years in filesystems"][0] by Kristian Köhntopp
