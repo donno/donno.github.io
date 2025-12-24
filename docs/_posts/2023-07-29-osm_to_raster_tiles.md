@@ -19,11 +19,11 @@ That stage will be the topic of a subsequent post.
 
 ## Open Street Map Data
 The first place to start is downloading an extract of the OpenStreetMap data. A
-great place to do this is from [Geofabrik](0) as they provide data by region
+great place to do this is from [Geofabrik][0] as they provide data by region
 as well as sub-regions so you get get a smaller part of the world.
 
 In my case I was interested in Australia so I used that below however
-previously I used the  Australia and Oceania which is a larger area and covers
+previously I used the Australia and Oceania which is a larger area and covers
 extra territories.
 
 ## Map Styling
@@ -38,12 +38,12 @@ For this article I used the OSM Carto style.
 
 #### OSM Carto
 The CartoCSS format stylesheets for OpenStreetMap style is found in the
-[openstreetmap-carto](6) repository by gravitystorm. It is unclear why
+[openstreetmap-carto][6] repository by gravitystorm. It is unclear why
 ownership was not transferred to the openstreetmap organisation as such they
 don't look as official as the old Mapnik styles.
 
-1. Install [carto](3) through [npm](4).
-2. Clone the Git [repository](5) for the OSM CartoCSS style.
+1. Install [carto][3] through [npm][4].
+2. Clone the Git [repository][5] for the OSM CartoCSS style.
    ```
    git clone https://github.com/gravitystorm/openstreetmap-carto.git
    ```
@@ -64,12 +64,12 @@ Ubuntu was running under Windows Subsystem for Linux (WSL). I didn't want to
 load the data into the default instance as I wanted to have it all in its own
 data directory and ran into problems. The problems were with permission for the
 directory on Window and the solution I decided to go with was to create a
-Virtual Harddrive and mount it into VM.
+Virtual Hard Drive and mount it into VM.
 
-- Set-up and mount virutal hardrive.
+- Set-up and mount virtual hardrive.
   This step was needed due to WSL and my insistence on not dumping it into the
   normal system volume of the Linux distribution.
-  For reference see the [GitHub discussion](2) about it
+  For reference see the [GitHub discussion][2] about it
   * Create a 30GB VHDX - the size was based on last time I knew it  took about
     22GB. I regrettably did this using the Disk Manager graphical user
     application rather than with the PowerShell command-let so it not
@@ -165,7 +165,7 @@ so X, Y and zoom where X and Y are the tile indices not Cartesian coordinates
 or WGS84 (latitude and longitude).
 
 The tile to render first was zoom level 10, x of 906 and y of 618.
-That tile can bne seen on [OpenStreetMap](6).
+That tile can be seen on [OpenStreetMap][6].
 
 The three images are all of this tile
 * The first is the original render I did back in 2020
@@ -210,7 +210,7 @@ tiles.
 
 ![Screenshot of explorer showing thumbnails in a tile folder.](/assets/2023-07-29-adelaide_tile_explorer.png "Screenshot of explorer showing thumbnails in a tile folder..")
 
-The source code this program is [available](8) on GitHub.
+The source code this program is [available][8] on GitHub.
 
 ### Conversions
 
@@ -235,7 +235,7 @@ of 906 and tile y of 906 to the WGS84 coordinates.
 
 This was needed because the `maptnik::Map` class pans/zooms to a region based
 on coordinates in its projection. In practice this means web mercator (EPSG
-3857), however the [documentation](7) covers going from the slippy map scheme
+3857), however the [documentation][7] covers going from the slippy map scheme
 to WGS84 (latitude and longitude) rather than straight to web mercator.
 
 ```c++
