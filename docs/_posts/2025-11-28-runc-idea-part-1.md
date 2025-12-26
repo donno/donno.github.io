@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "runc idea - part 1"
-date:   2025-11-28 15:00:00 +0930
+date:   2025-11-28 15:00:00 +1030
 ---
 
 Basic premise is to explore an idea of turning container images into

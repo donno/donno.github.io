@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Revisting baconfactor"
-date:   2025-11-23 18:00:00 +0930
+date:   2025-11-23 18:00:00 +1030
 ---
 
 Last weekend, I was catching up with friends and the game of "Six Degrees of

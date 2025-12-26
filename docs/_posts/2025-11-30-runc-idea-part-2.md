@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "runc idea - part 2"
-date:   2025-11-30 23:10:00 +0930
+date:   2025-11-30 23:10:00 +1030
 ---
 
 This continues the container idea using runc started in [part 1](0) where the
