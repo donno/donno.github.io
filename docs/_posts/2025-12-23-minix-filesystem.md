@@ -478,7 +478,7 @@ A few things would be:
 - Separate block handling / device handling out - i.e. try a more layered
   approach
 - Implement [`fsspec`][6] over which provides a more common interface over it
-  the higher level file system interface. Think of it as pathlib but for the
+  the higher level file system interface. Think of it as `pathlib` but for the
   IO.
 
 A look into the FAT (File Allocation Table) file system is something I'm keen
