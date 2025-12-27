@@ -21,7 +21,7 @@ this year.
 ** Worked on some world-building ideas for a game I had. Hopefully in the new
    year I can get to writing up about various parts of that. I don't expect to
    complete the game itself let alone get a beta out for it.
-* Went boulding a couple of times this year except the closest gym is closing
+* Went bouldering a couple of times this year except the closest gym is closing
   in January 2024 which is a shame as I was thinking of getting a membership.
 
 ## Games
@@ -74,7 +74,7 @@ it and the Games with Gold were not worth it.
   * Started year with a rating of 969 and ended on 1054.
   * Longest winning streak was 10 games between 2023-09-07 to 2023-09-09.
   * Longest streak (of playtime): 1 hour 21 minutes on 2023-03-11.
-  * Reached highest raiting in blitz of 1110.
+  * Reached highest rating in blitz of 1110.
 
 ## Television
 
@@ -125,7 +125,7 @@ the song in the background.
 
 For British India, I don't really remember listening to the songs themselves it
 must have more been Spotify got stuck on a playlist. Likewise for
-Better Off Alone but that might have been it was a feature on a  playlist that
+Better Off Alone but that might have been it was a feature on a playlist that
 also included several Ace of Base songs.
 
 # Things for 2024
