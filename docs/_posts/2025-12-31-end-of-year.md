@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "End of Year 2025"
-date:   2025-12-31 20:00:00 +1030
+date:   2025-12-31 17:30:00 +1030
 ---
 Closing out the year 2025. An overview on some things I did, played and watched
 this year.
@@ -32,7 +32,7 @@ it and the Games with Gold were not worth it.
     * Tony Hakw's Pro Sakter 3 + 4
   * Overall, I probably aren't getting value out of this, if I do move to
     Black Ops 7, I will need to look at price of buying it out right to another 
-    year or two of Games Pass../
+    year or two of Games Pass.
 * Spyro
     * Didn't make any progress on the third game all year.
 * Diablo Immortals
@@ -43,7 +43,7 @@ it and the Games with Gold were not worth it.
     * 973 Atomic and 25 Blitz
     * 908 Lobby, 41 Computer and 24 Tournaments.
   * Played 2 days and 7 hours
-  * Started year with a rating of <TODO> and ended on <TODO>.
+  * Started year with a rating of 1425 and ended on 1721.
   * Longest winning streak was 30 games between 2025-02-10 to 2025-02-11
   * Longest loosing streak was 9 games on 2025-02-28.
   * Longest streak (of playtime): 2 hour 13 minutes on 2025-02-28.
