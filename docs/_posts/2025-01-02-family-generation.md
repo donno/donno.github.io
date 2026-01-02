@@ -10,9 +10,9 @@ to work on. That idea was to generate families to live in a town as well as
 businesses for those families to visit. A lot of that came from watching a
 video on Dwarf Fortress.
 
-The actual coding of this took place around 2023-09-23. This si therefore not
-so much a journal of the steps I took but more a description of the system that
-was built. I will add several months earlier I had looked at using
+The actual coding of this took place around 2023-09-23. This is not so much a
+journal of the steps I took but more a description of the system that was
+built. I will add several months earlier I had looked at using
 OpenStreetMap to source a list of shops and offices as a starting place for
 businesses.
 
