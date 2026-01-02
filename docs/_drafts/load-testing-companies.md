@@ -187,6 +187,133 @@ class CompanyJson(typing.TypedDict):
     """The name of the groups (or roles) used at the company."""
 ```
 
+## Company Allocation
+The idea is represent 5 sizes of companies, in a limited market space.
+This means no IBM with 300 thousand employees.
+
+- Huge
+    * 500 to 4000 employees
+- Large
+    * 100 to 500
+- Medium
+    * 25 to 100
+- Small
+    * 5 to 25 employees
+
+In order to generate enough employees to have enough going around you need to
+generate a lot of employees, and I didn't have the need for quite so many
+users so I ended up simply eliminating the huge category.
+
+```py
+def assign_people_to_company(company_count: int, employee_count: int) -> list[int]:
+    small_company_count = int(0.4 * company_count)
+    medium_company_count = int(0.5 * company_count)
+    huge_company_count = int(0.1 * company_count)
+
+    minimum_employees_assigned = (
+        5 * small_company_count + 50 * medium_company_count + 200 * huge_company_count
+    )
+
+    # Take an extra 500 people out to assign to the largest company to give
+    # them an extra edge so there least one company bigger than the rest.
+    reserved_for_largest_company = 500
+    spare = employee_count - minimum_employees_assigned - reserved_for_largest_company
+
+    if spare < 0:
+        raise ValueError(
+            "Either too many companies, too few people or weighting are off."
+        )
+    ...
+```
+
+Starting off given how many companies should be created we decide how to break
+it up into small, medium and large (called `huge` in the code)
+
+Next what we do is compute the minimum number employees assigned, as we don't
+want some companies to end up with no employees (otherwise why bother) likewise
+under 5 is a bit too small to really be a company for this testing.
+
+Likewise, we want to ensure the largest company has 500 - this is really an
+exception to the logic above, what we end up doing is we pick the company
+with the most employees and give them a larger head count.
+
+In terms of weightings, companies need more change to get extra employees
+otherwise, they all end up equally getting extra hires (i.e. more then then
+minimum) which is especially true for the upper range of companies.
+
+
+Brining this all together:
+```python
+def assign_people_to_company(company_count: int, employee_count: int) -> list[int]:
+    ...
+
+    company_weights = []
+    company_weights.extend(
+        random.choices(
+            range(-10, 400, 80),
+            k=small_company_count,
+        ),
+    )
+    company_weights.extend(
+        random.choices(
+            range(100, 900, 300),
+            k=medium_company_count,
+        ),
+    )
+    company_weights.extend(
+        random.choices(
+            range(20, 5000, 1000),
+            k=huge_company_count,
+        ),
+    )
+    spare_assignment = random.choices(
+        range(company_count),
+        weights=company_weights,
+        k=spare,
+    )
+
+    sized_range = lambda start, count: range(start, start + count)
+
+    small_company_assignment = expand(range(small_company_count), 5)
+    medium_company_assignment = expand(
+        sized_range(small_company_count, medium_company_count),
+        50,
+    )
+    huge_company_assignment = expand(
+        sized_range(
+            small_company_count + medium_company_count,
+            huge_company_count,
+        ),
+        200,
+    )
+
+    largest_company = collections.Counter(huge_company_assignment).most_common(1)[0][0]
+    largest_company_extra_assignments = list(
+        itertools.repeat(
+            largest_company,
+            reserved_for_largest_company,
+        ),
+    )
+
+    return (
+        small_company_assignment
+        + medium_company_assignment
+        + huge_company_assignment
+        + spare_assignment
+        + largest_company_extra_assignments
+    )
+```
+
+The list returned is the index of company that each person was assigned to.
+For example:
+    `[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]`
+
+The first 6 employees are assigned to ((hired by) company 0, the next 5 employees
+are assigned to company 1, and then the rest of the employees are company 2.
+
+The alternative way to do this would have been to simply have it return
+the number of employees in each company and handle the associate separately.
+
 ### Group Allocation
 
 The idea of a group was to either be based on role and/or department, so
