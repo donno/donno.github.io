@@ -140,7 +140,7 @@ A    /var/cache/apk/APKINDEX.76ae5dea.tar.gz
 ```
 
 Can test it:
-```
+```sh
 ostree --repo=repo checkout alpine-v3.22.2-x86_64 with-curl
 chroot with-curl
 curl --help
