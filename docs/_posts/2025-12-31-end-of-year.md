@@ -16,6 +16,7 @@ this year.
 * Sat the exam for "AWS Certified Developer - Associate".
   * Given my employer doesn't contract its developers out it wasn't worth the
     hassle of preparing for the exam or taking it.
+
 ## Games
 Towards the end of the year I stopped my Xbox Live Gold subscription after
 about 8 years, as at least for the past 2 maybe 3 I wasn't making good use of
@@ -31,7 +32,7 @@ it and the Games with Gold were not worth it.
     * Hollow Knight: Silksong
     * Tony Hakw's Pro Sakter 3 + 4
   * Overall, I probably aren't getting value out of this, if I do move to
-    Black Ops 7, I will need to look at price of buying it out right to another 
+    Black Ops 7, I will need to look at price of buying it out right to another
     year or two of Games Pass.
 * Spyro
     * Didn't make any progress on the third game all year.
@@ -72,7 +73,6 @@ it and the Games with Gold were not worth it.
       * I previously watched the first episode and didn't get into it but gave
         it another chance and was happy, it started it very slow.
     * Ironheart - Season 1
-      * 
     * Daredevil: Born Again - Season 1
     * Shifting Gears - Season 1
       * Prefer Home Improvement and Last Man Standing
@@ -120,16 +120,16 @@ These are some technical talks that I watched.
     file system before folowing the threads of 9P protcol and Network Block
     Device protocols.
 * ["Podman networking deep dive"][2] by Paul Holzinger at [DevConf.CZ 2024][3].
-  * Highly recommend this one for getting to know the challanages faced with
+  * Highly recommend this one for getting to know the challenges faced with
     container networking.
-* ["More Than Just Quite OK – Data Compression Nerds Hate This One Trick"][4] by 
+* ["More Than Just Quite OK Data Compression Nerds Hate This One Trick"][4] by
   kleines Filmröllchen at [Easterhegg 2025][6].
 * ["Numerical Marvels Inside Python"][5] by Raymond Hettinger at PyData Tel
   Aviv 2022.
 * ["How to become your own ISP"][7] by Nick Bouwhuis at [Why 2025][8] (What
    Hackers Yearn).
     * Introduces BGP (Border Gate Protocol) and AS (Autonomous system) numbers.
-    * Covers what to acquire and where from. 
+    * Covers what to acquire and where from.
 * **Bonus** - Not a technical talk but facts meets comedy.
   ["Full Comedy Special"][9] by Hank Green, if you have Dropout.tv be sure
   to watch it there.
@@ -153,6 +153,7 @@ I may also try to post ideas rather than experiments or dives into the, as well.
 [0]: https://media.ccc.de/v/froscon2025-3238-50_years_in_filesystems/
 [1]: https://froscon.org/en/
 [2]: https://www.youtube.com/watch?v=MCY6APZ4x3A
+[4]: https://cfp.eh22.easterhegg.eu/eh22/talk/Q8EBUL/
 [3]: https://www.devconf.info/cz/
 [5]: https://youtu.be/wiGkV37Kbxk
 [6]: https://eh22.easterhegg.eu/
