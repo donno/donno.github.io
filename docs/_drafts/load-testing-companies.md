@@ -231,16 +231,17 @@ it up into small, medium and large (called `huge` in the code)
 
 Next what we do is compute the minimum number employees assigned, as we don't
 want some companies to end up with no employees (otherwise why bother) likewise
-under 5 is a bit too small to really be a company for this testing.
+under 5 is a bit too small to really be a company for this testing. This way
+up front we know how many employees are `spare` to be distributed amongst
+the companies as additional head count from their minimum.
 
 Likewise, we want to ensure the largest company has 500 - this is really an
 exception to the logic above, what we end up doing is we pick the company
-with the most employees and give them a larger head count.
+with the most employees and give them a larger head count..
 
 In terms of weightings, companies need more change to get extra employees
 otherwise, they all end up equally getting extra hires (i.e. more then then
 minimum) which is especially true for the upper range of companies.
-
 
 Brining this all together:
 ```python
@@ -308,11 +309,46 @@ The list returned is the index of company that each person was assigned to.
 For example:
     `[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]`
 
-The first 6 employees are assigned to ((hired by) company 0, the next 5 employees
+The first 6 employees are assigned to (hired by) company 0, the next 5 employees
 are assigned to company 1, and then the rest of the employees are company 2.
 
 The alternative way to do this would have been to simply have it return
 the number of employees in each company and handle the associate separately.
+
+Within the weights there are negative which essentially  a way to treat some
+companies as having no additional staff.
+
+The other approach considered for creating one large company was to merge
+a few of the companies together at the end. In the end as described above,
+it was realised there was an easier way, simply reserve extra headcount for the
+largest company, so remove that from spare, then after randomly assigning
+people to companies look for the largest one and then allocate those extra
+headcount to that company. This is essentially what the code dealing with
+`largest_company` is about.
+
+### Tweaking
+
+The weights on how to split how many companies in the different size ranges
+as well as the weights for each company having variable head count required
+some tweaking to get the desired results.
+
+The catch however is those tweaks were based around the company and employee
+counts. This means the numbers don't work as well for different ratios
+of companies and employees. On top of that there is also  getting the ratio
+between companies and employees right. Essentially there number of
+total employees to go around needs to be at least an order of magnitude larger
+often two.
+
+The starting point was  `company_count = 2000` and `employee_count = 50000`,
+however to satisfy the minimum head count of all the companies that needs
+about 44 thousand more employees. Reducing the company count down to `1000`
+helps as that means there is now around 2500 extra employees needed but
+it has poor variability however it still twice as much needed.
+
+At the end of the day what I found was `50,000` people amongst `200` companies
+were just right. The reason for this is only `9,400` employees are preassigned
+and the rest of them can be randomly assigned to increase the head counts of
+the companies.
 
 ### Group Allocation
 
