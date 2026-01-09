@@ -60,8 +60,8 @@ have: `-co TILED=YES -co COMPRESS=DEFLATE` in order to ensure a reasonble
 file size.
 
 ### Script
-The script I used to create the commands that I then ran in a [Anaconda](3)
-environment which had GDAL installed, is available in a [gist](4).
+The script I used to create the commands that I then ran in a [Anaconda][3]
+environment which had GDAL installed, is available in a [gist][4].
 
 This script uses the first option above where it runs gdal_merge.py but handles
 if there are a lot of files it passes the paths to the file to the script via

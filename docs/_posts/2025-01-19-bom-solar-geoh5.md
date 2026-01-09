@@ -5,9 +5,9 @@ date:   2025-01-18 20:00:00 +1030
 ---
 
 Several years ago (back in 2021), I came across the
-[daily solar exposure data](0) shared by Australia's
-[Bureau of Meteorology (BOM)](1). This weekend I revisited using the data to
-convert it into the [GEOH5](2) format, an open format for geo-science data.
+[daily solar exposure data][0] shared by Australia's
+[Bureau of Meteorology (BOM)][1]. This weekend I revisited using the data to
+convert it into the [GEOH5][2] format, an open format for geo-science data.
 
 Data
 ----
@@ -16,7 +16,7 @@ There is a grid produced for each day, the resolution for spatial data is
 0.05 degrees or about 5km.
 
 The file format itself is documented on the Wikipedia article for
-[Esri grid](3). I had already written the code to read the format back in
+[Esri grid][3]. I had already written the code to read the format back in
 2021 which I reused for this project.
 
 GEOH5
@@ -58,7 +58,7 @@ in the context of drillholes and drillholes groups that I overlooked at the
 time). Looking at the API reference I expected it to be
 `group.add_children(grid)` but it turned out when you create the entity you
 must pass `parent=group,` to the `create()` function. I've provided this
-as feedback to them so hopefully that can be improved. Update 2025-01-25: 
+as feedback to them so hopefully that can be improved. Update 2025-01-25:
 `add_children()` works correct with 0.10.0 released yesterday.
 
 The other gotcha was adding the data as the `Grid2D.create()` creates
@@ -70,7 +70,7 @@ entity. This is general so it applies to every object type I think.
 
 Orientation
 -----------
-Importing in a shapefile containing the Coastline from [Natural Earth](4), made
+Importing in a shapefile containing the Coastline from [Natural Earth][4], made
 it a easy to diagnose the problem with the orientation of the data.
 
 ![Screenshot showing solar data in wrong orientation](/assets/2025-01-19-wrong_orientation.png)
@@ -83,8 +83,8 @@ fitting in Australia as solar data was upside down and around the wrong way.
 
 To sort it out I modified my code to add the four different permutations of
 the data with various flipping applied, which made it easy to figure out what
-I needed to do. It was a matter of switching between the data in Geoscienc
- ANALYST to find the one that was correct.
+I needed to do. It was a matter of switching between the data in Geoscience
+ANALYST to find the one that was correct.
 
 The code essentially looked looked like this:
 ```python
@@ -121,9 +121,9 @@ schema used by the BOM on their website.
 Source
 ------
 
-* [bom.py](5) - Module for reading the Esri Grid and dealing with the tarball
+* [bom.py][5] - Module for reading the Esri Grid and dealing with the tarball
   and compressed data.
-* [bom_solar_geoh5](6) - Module which brings bom.py and geoh5py together to
+* [bom_solar_geoh5][6] - Module which brings bom.py and geoh5py together to
   make a GEOH5 workspace with the daily solar data.
 
 [0]: http://www.bom.gov.au/jsp/awap/solar/index.jsp

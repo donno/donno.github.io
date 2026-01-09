@@ -25,7 +25,7 @@ the TIFF section.
 ## Creating PNGs
 
 For generating the tiles, you might have better luck, following the
-Switch2OSM's article ["Manually building a tile server"](0).
+Switch2OSM's article ["Manually building a tile server"][0].
 
 ### Windows Setup
 This is the set-up needed for osm2pgsql. I used Postgres 12 but I am sure 14
@@ -91,12 +91,12 @@ you running it on another machine the host or as a different user.
 
 #### OSM Carto
 The CartoCSS format stylesheets for OpenStreetMap style is found in the
-[openstreetmap-carto](6) repository by gravitystorm. It is unclear why
+[openstreetmap-carto][6] repository by gravitystorm. It is unclear why
 ownership was not transferred to the openstreetmap organisation as such they
 don't look as offical as the old Mapnik styles.
 
-1. Install [carto](3) through [npm](4).
-2. Clone the Git [repository](6) for the OSM CartoCSS style.
+1. Install [carto][3] through [npm][4].
+2. Clone the Git [repository][6] for the OSM CartoCSS style.
    ```
    git clone https://github.com/gravitystorm/openstreetmap-carto.git
    ```
@@ -111,8 +111,8 @@ What is not included here is:
 - Downloading fonts with scripts/get-fonts.sh.
 
 #### OSM Bright
-1. Install [carto](3) through [npm](4).
-2. Clone the Git [repository](5) for the OSM Bright style.
+1. Install [carto][3] through [npm][4].
+2. Clone the Git [repository][5] for the OSM Bright style.
 3. Follow the setup instructions in the README.md
     * Download shapefile
     * Rename/copy configure.py.sample to configure.py
@@ -254,7 +254,7 @@ And for each tile there was:
 Adelaide : 18 <x> <y>   Empty Tile
 ```
 
-The only lead I had for this is for kosmtik in [issue #336](2) which mentions
+The only lead I had for this is for kosmtik in [issue #336][2] which mentions
 mapnik and proj6+.
 
 I tried running the tests but that wasn't looking good either as
@@ -272,7 +272,7 @@ after being deprecated under the old location since Python 3.3. A quick tweaking
 of nose to change that seemed to be the only critical issue.
 
 The tests confirmed Projection.inverse only returns infinities which was
-a [reported issue](7).
+a [reported issue][7].
 
 The last thing I tried was tweaking hte Spatial Reference System (SRS) within
 the CartoCSS (and by association the Mapnik Style XML) to use the EPSG code
@@ -310,7 +310,7 @@ RuntimeError: projection::forward not supported without proj4 support (-DMAPNIK_
 
 I also suspect that the problem with the script may be the use of
 mapnik.Projection.forward() which as this
-[issue #3360](8) hints at that might be the wrong approach and it should be
+[issue #3360][8] hints at that might be the wrong approach and it should be
 using ProjTransform. That sounds similar to the above problem about
 invalid latitude if the forward() was resulting in infinities..
 
