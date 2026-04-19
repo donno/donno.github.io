@@ -1,3 +1,7 @@
+---
+name: Mirror Alpine Packages
+---
+
 Snippet for mirroring alpine 3.8 packages - essentially x86_64.
 
 If you are going to run it be sure to consider a different mirror, there may

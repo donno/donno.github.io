@@ -42,4 +42,13 @@ plugins:
 #   - vendor/ruby/
 
 collections:
-  - snippets
+  snippets:
+    permalink: "/:collection/:path/"
+    output: true
+
+defaults:
+  - scope:
+      path: _snippets
+      type: snippets
+    values:
+      layout: snippets
