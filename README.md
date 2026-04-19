@@ -15,7 +15,7 @@ Notes
 Building
 --------
 ```sh
-podman run --rm --volume=$(pwd):/srv/jekyll -it docker.io/bretfisher/jekyll:latest jekyll build
+podman run --rm --volume=$(pwd):/site -it docker.io/bretfisher/jekyll:latest jekyll build
 ```
 
 Why not `jekyll/jekyll`? It has essentially been abandoned for over 3 years

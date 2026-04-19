@@ -40,3 +40,6 @@ gem "webrick", "~> 1.8"
 # However, minima still uses that so downgrade the old sass converter until a
 # new version is available. https://github.com/jekyll/minima/issues/709
 gem "jekyll-sass-converter", "~> 2.0"
+
+# bigdecimal was part of the standard library but was moved out at soime point.
+gem "bigdecimal"
