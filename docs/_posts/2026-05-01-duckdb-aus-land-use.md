@@ -20,9 +20,9 @@ their natural boundaries rather than being gridded into a raster.
 1. Downloading the [package](2).
     ```sh
     curl -LO https://data.gov.au/data/dataset/8af26be3-da5d-4255-b554-f615e950e46d/resource/b216cf90-f4f0-4d88-980f-af7d1ad746cb/download/clum_commodities_2023.zip
-        ```
-2. Downloading DuckDB
     ```
+2. Downloading DuckDB
+    ```sh
     curl -LO https://install.duckdb.org/v1.5.2/duckdb_cli-windows-amd64.zip
     tar xf duckdb_cli-windows-amd64.zip
     ```
@@ -108,8 +108,8 @@ GROUP BY Commod_dsc ORDER BY total_area DESC;
 A hectares is 10000m², or 0.01 km²
 
 ## Results
-|     commodities      | total_area  |
-|----------------------|------------:|
+| Commodities          | Total Area  |
+|----------------------|-------------|
 | cattle meat          | 592776.5517 |
 | cattle dairy         | 17495.1264  |
 | sugar cane           | 5724.9786   |
