@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Lima and Windows
-date:   2026-05-01 11:00:00 +1030
+date:   2026-04-28 11:00:00 +1030
 ---
 
 Taking a look at using [Lima](0) which is a is a tool that allows you to run Linux
