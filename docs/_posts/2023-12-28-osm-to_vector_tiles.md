@@ -4,8 +4,8 @@ title:  "OSM to Vector Tiles"
 date:   2023-12-28 23:00:00 +0930
 ---
 
-Rendering [OpenStreetMap](0) (OSM) data to vector tiles in [MBTiles](1), where
-the tiles are in the [Mapbox Vector Tile Format](2) and [tilemaker](3) will be
+Rendering [OpenStreetMap][0] (OSM) data to vector tiles in [MBTiles][1], where
+the tiles are in the [Mapbox Vector Tile Format][2] and [tilemaker][3] will be
 used to do the heavy lifting.
 
 The tilemaker tool aims to be 'stack-free' where you don't need a database or
@@ -15,7 +15,7 @@ typical stack of using a Postgres server and `osm2pgsql` and several other
 tools to load the data into the database.
 
 This came about because I was looking into the dataset that Microsoft released
-which included building [footprints for Australia](9) and wanted to see that
+which included building [footprints for Australia][9] and wanted to see that
 data with OpenStreetMap within QGIS. For that use I could have simply added
 an XYZ layer which used OpenStreetMap's raster tiles for context.
 
@@ -37,7 +37,7 @@ chmod +x ~/tilemaker-v2.4.0/tilemaker
 Extracting out a sub-section of the data is not required, specially if the
 data is already small enough for the area you are interested in.
 
-* Download an extract of the OpenStreemMap data from [Geofabrik](4).
+* Download an extract of the OpenStreemMap data from [Geofabrik][4].
   ```
   curl -L http://download.geofabrik.de/australia-oceania/australia-latest.osm.pbf --output Source/OpenStreetMap/osm/australia-$(date -u +"%Y-%m-%d").osm.pbf
   ```
@@ -45,7 +45,7 @@ data is already small enough for the area you are interested in.
   ```
   curl -L http://download.geofabrik.de/australia-oceania/australia-latest.osm.pbf --output Source/OpenStreetMap/osm/australia-2023-12-28.osm.pbf
   ```
-* Use [osmium tools](5) to extract a subsection from the previous download.
+* Use [osmium tools][5] to extract a subsection from the previous download.
     * For Ubuntu 22.04, the tools can be an be installed via
       `apt install osmium-tool`
     * Use osmium tool to extract a subsection out of the source file.
@@ -54,7 +54,7 @@ data is already small enough for the area you are interested in.
     ```
 
 To determine what the bounding box was the following steps were followed:
-* Go to the CD (Coordinate Display) tab of [Tile Calculator](10).
+* Go to the CD (Coordinate Display) tab of [Tile Calculator][10].
 * Translate yellow box over the target region, this is done by dragging the box.
 * Resize the box using the corners or mid-points around the edge.
 * Copy the bounding box from the right hand side in the Coordinate Display tab.

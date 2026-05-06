@@ -13,21 +13,21 @@ this year.
 * Went on honeymoon to Seoul, JeJu and across Japan.
 * Coding
     * Found some time to continue working in the world-building ideas for the game.
-    I wasn't however able to find the time to write about the game, I might 
+    I wasn't however able to find the time to write about the game, I might
     try to get to writing at least one post during my remaining holidays early
     in the new year.
-    * Expanded on the digital logic circuits project by adding NotGate and 
-    adding a higher level concept such as integer to binary as well as a 
+    * Expanded on the digital logic circuits project by adding NotGate and
+    adding a higher level concept such as integer to binary as well as a
     Binary Coded Decimal to 7-segment Decoder.
     * Added support for basic styling to the vectortile renderer.
     * Wrote a tool for building graph of the dependencies of DLLs. This calls out
-    to [Dependencies](0) by [lucasg](0) to find the dependencies of a set o
+    to [Dependencies][0] by [lucasg][0] to find the dependencies of a set o
     DLLs then generates a graph in DOT language and runs GraphViz to render it
     to a PNG.
     * Created a proof-of-concept of a Python script which watches Notepad for
     keywords and the sends it to a HTTP service hosting llama.cpp and replaces
     the line with the result. Microsoft themselves are adding Copilot to it.
-    * Started a small project to create a native PDF viewer built on [pdfium](2). 
+    * Started a small project to create a native PDF viewer built on [pdfium][2].
     * Started using Rust sincerely for two projects.
         * One of them using the [openapi-generator][3] to handle creating a
           crate from an OpenAPI specification.\
@@ -35,8 +35,8 @@ this year.
           specification not bounded enough and has extra states, i.e. it should
           make more guarantees on what is required and thus will always be
           provided.
-        * One of them used [`ratatui`](4) while the other used 
-          [`native-windows-gui`](5)
+        * One of them used [`ratatui`][4] while the other used
+          [`native-windows-gui`][5]
     * Built OCI images from Pytho
     * Tried out BitTorrent seeders and lechers in containers.
 * Things I looked into
@@ -51,8 +51,8 @@ this year.
         * MBTiles - A specification for storing tiled map data in SQLite databases for immediate usage and for transfer and used in a SQLite3 database. Can store raster (PNG) or vectors (MVT).
         * PMTiles - single-file archive format for tile data, designed to work with HTTP range requests
         * Related - Shortbread Vector Tiles, Mapbox Style, MapLibreStyle, Protomaps and VersaTiles
-    * [Multi-Threaded Routing Toolkit (MRT)](6) Routing Information Export Format - didn't get far here.
-    * Importing Jira data into [Taiga](7), [Plane](8) and [Huby](9).
+    * [Multi-Threaded Routing Toolkit (MRT)][6] Routing Information Export Format - didn't get far here.
+    * Importing Jira data into [Taiga][7], [Plane][8] and [Huby][9].
     ** Taiga was the simplest.
     ** Plane has the problem you need all the users registered to be able to associate
     the issues with them and there no bulk.
@@ -72,7 +72,7 @@ this year.
       in a year. As most matches were filled with bots for the royale mode.
     * It Takes Two - Started playing this with my Fiancée, completed the first two
       levels.
-    * Palworld - I put about 48 hours into this before August 2024. The 
+    * Palworld - I put about 48 hours into this before August 2024. The
       resource collection, technology tree and building really hit the void from
       Minecraft as this year didn't play any Minecraft mods. The thing that got
       me behind was not capturing as many Pals as possible early on in order to
@@ -133,7 +133,7 @@ The intention was to cancel Disney+ however I missed sorting it out by 3 days.
 * Alita: Battle Angel
 * Bevely HIlls Cop: Alex F
 * Ford v Ferrari - Watched this on the plane
-* Bohemian Rhapsody 
+* Bohemian Rhapsody
 * Aquanman and the Lost Kingdom
 * Blue Bettle
 * America Ultra

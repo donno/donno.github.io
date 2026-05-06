@@ -45,14 +45,14 @@ this information is as follows.
 ## Given names
 * This data comes from popular baby names in the state of South Australia
   from 1944 to 2013.
-* The data is licenced under the [Creative Commons Attribution](3).
-* The data source is the [Popular Baby Names](0) from Data.SA.
+* The data is licenced under the [Creative Commons Attribution][3].
+* The data source is the [Popular Baby Names][0] from Data.SA.
 
 ## Surnames
 * This data comes from deceased estate files of the state of New South Wales
   from 1880 to 1923.
-* The data is licenced under the [Creative Commons Attribution](3).
-* The data source is the [Deceased Estate Files, 1880-1923](1) from Data.NSW.
+* The data is licenced under the [Creative Commons Attribution][3].
+* The data source is the [Deceased Estate Files, 1880-1923][1] from Data.NSW.
 
 ## Alternate
 The original approach taken was to look at the ticket of leave data, which
@@ -64,8 +64,8 @@ house-arrest arrangement.
 
 * This data is based on convicts in the state of New South Wales from
   1810 to 1875.
-* The data is licenced under the [Creative Commons Attribution](3).
-* The data source is the [Convict Index](2) from Data.NSW.
+* The data is licenced under the [Creative Commons Attribution][3].
+* The data source is the [Convict Index][2] from Data.NSW.
 
 ## Preparation
 The list of baby names is divided by male and female and per year. A tally of

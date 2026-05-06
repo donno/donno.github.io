@@ -158,7 +158,7 @@ once I knew that torrenting part had ben setup.
 
 ### User Interface
 When trying to get a better sense of what the seeder was doing, I tried out
-[Flood](9) which is a web interface for rtorrent. This worked well when running
+[Flood][9] which is a web interface for rtorrent. This worked well when running
 it in the same container as rtorrent, so initially I imply set-up a seperate
 target in the Dockerfile which installed flood from npm.
 
@@ -183,7 +183,7 @@ overlooked. The idea was to publish this anyway even if it was incomplete.
 
 In the end, the compose file, starts a service to create the torrents and
 two seeders which had access to the original files followed by 10 leachers.
-Additionally, it can start the seeder-ui service with [flood](9) if the debug
+Additionally, it can start the seeder-ui service with [flood][9] if the debug
 profile is used.
 
 The future idea would be write a custom front-end for monitoring multiple

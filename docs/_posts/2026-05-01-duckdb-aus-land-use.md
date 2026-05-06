@@ -5,19 +5,19 @@ date:   2026-05-01 11:00:00 +1030
 ---
 
 Investing how much land in Australia is used for different crops.
-This came about after watching the recently ["Ask Hank Anything"](0)
+This came about after watching the recently ["Ask Hank Anything"][0]
 episode featuring Simone Giertz, where Hank compared the size of land used
 for growing corn (also known as maize) in the United States of America with the
 land mass of Sweden.
 
-The Australian government publishes information about this as part of 
-their "Catchment Scale Land Use of Australia" [dataset](1). The version I'm
+The Australian government publishes information about this as part of
+their "Catchment Scale Land Use of Australia" [dataset][1]. The version I'm
 interested in is the ESRI Shapefile version as that has the land parcels with
 their natural boundaries rather than being gridded into a raster.
 
 ## Getting started
 
-1. Downloading the [package](2).
+1. Downloading the [package][2].
     ```sh
     curl -LO https://data.gov.au/data/dataset/8af26be3-da5d-4255-b554-f615e950e46d/resource/b216cf90-f4f0-4d88-980f-af7d1ad746cb/download/clum_commodities_2023.zip
     ```
@@ -74,7 +74,7 @@ TO 'australia_land_use_2023.parquet' (FORMAT PARQUET);
 ```
 
 ## Explore data
-DuckDB has a built-in web UI that works kind of like a [Jupyter Notebook](4).
+DuckDB has a built-in [web UI][3] that works kind of like a [Jupyter Notebook][4].
 
 Some queries:
 ```SQL
@@ -83,7 +83,7 @@ SELECT * FROM australia_land_use_2023 LIMIT 10;
 -- List of commodities in the data set.
 SELECT DISTINCT Commod_dsc FROM australia_land_use_2023;
 
--- List the commodities and their how many occurrences there are: 
+-- List the commodities and their how many occurrences there are:
 SELECT Commod_dsc, COUNT(*) as count
 FROM australia_land_use_2023
 GROUP BY Commod_dsc ORDER BY count DESC;

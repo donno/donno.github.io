@@ -4,7 +4,7 @@ title:  "runc idea - part 2"
 date:   2025-11-30 23:10:00 +1030
 ---
 
-This continues the container idea using runc started in [part 1](0) where the
+This continues the container idea using runc started in [part 1][0] where the
 idea was to turn container images into applications or more likely services.
 Last time, the OCI image was turned into an OCI bundle that was runnable with
 runc. The problem was the networking wasn't configured to allow the host to
@@ -12,7 +12,7 @@ talk to the service running in the container.
 
 The starting point is to consider the Container Network Interface (CNI), which
 has the tag line of "networking for Linux containers". Other ideas is to check
-to see if [iptables](2) or [nftables](3) (which is the intended as the
+to see if [iptables][2] or [nftables][3] (which is the intended as the
 replacements for the former tools). The question I would like answered is does
 `iptables` or `nftables` enable us to forward ports from the localhost interface
 within the container to the host.
@@ -32,7 +32,7 @@ By adding the `--rootless` argument to `umoci` what it does is it doesn't try
 to change the owner to `root` as it is in the layer tarballs and therefore
 allows it to be created.
 
-The [documentation](4) of rootless option of `umoci` mentions
+The [documentation][4] of rootless option of `umoci` mentions
 > umoci also supports the user.rootlesscontainers specification, which allows for further emulation of things like chown(2) inside rootless containers using tools like PRoot.
 
 That sounds as if it may be a solution to the problem where the valkey
@@ -212,7 +212,7 @@ I'm not sure if `iptables` or `nftables` could be used to set-up the port
 forwarding between namespaces.
 
 For non-network avenues, explore the `user.rootlesscontainers` and PRoot
-mentioned by [umoci's](4) documentation about rootless.
+mentioned by [umoci's][4] documentation about rootless.
 
 The other thing that may have been useful but wasn't needed in today's session
 was:

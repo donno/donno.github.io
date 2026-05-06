@@ -15,7 +15,7 @@ This mostly came down to most of the tools being very difficult to run
 inside a container or WSL2. This is because the two most common options both
 require mounting the image which required kernel modules not available. The
 two ways being via a loop device (`losetup`) or a NBD (network block device).
-The latter option is what the [`alpine-make-vm-image`](1) project uses.
+The latter option is what the [`alpine-make-vm-image`][1] project uses.
 
 > Attaching image alpine.qcow2 as a NBD device
 modprobe: can't change directory to '/lib/modules': No such file or directory
@@ -72,7 +72,7 @@ Thus started with this.
 apk --arch x86_64 -Xhttps://dl-cdn.alpinelinux.org/alpine/latest-stable/main/ --root /rootfs --initdb --no-cache --allow-untrusted add alpine-base
 ```
 
-Next-up was creating the initial filesystem from it using [`mkinitfs`](2). The
+Next-up was creating the initial filesystem from it using [`mkinitfs`][2]. The
 first problem was it needs to know the kernel version.
 
 TO determine the kernel version I first download it:
@@ -122,11 +122,11 @@ One good thing that came out of this was extracting the modules from
 I was confident that the populating of the system was working fine and it was
 mainly with the conversion of the folder into the single file that was the
 problem. This is where I came across a Gist titled
-[run a minimal alpine based initramfs in VM machine](3). This has the command
+[run a minimal alpine based initramfs in VM machine][3]. This has the command
 for converting from the extracted minimal root filesystem to the file.
 
 The key part is the tool `cpio` which is a file archiver from the early Unix
-days. I ended up checking the [firecracker-initrd](4) project for how it sets
+days. I ended up checking the [firecracker-initrd][4] project for how it sets
 it up and sure enough it uses that tool but the key part I hadn't done yet
 was set-up the `/etc/init.d`.
 

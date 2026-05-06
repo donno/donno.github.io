@@ -98,8 +98,8 @@ Children
 The first post overlooked how to select the number of children per family.
 
 The starting point of this was the
-[Count of dependent children in family (CDCF)](0) from the
-[Australian Bureau of Statistics](1). Essentially, it provides information about
+[Count of dependent children in family (CDCF)][0] from the
+[Australian Bureau of Statistics][1]. Essentially, it provides information about
 how many families have 0, 1, 2, 3, 4, 5 and 6 or more children within
 Australia during a census (survey of the population).
 

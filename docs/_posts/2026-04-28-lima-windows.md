@@ -4,7 +4,7 @@ title:  Lima and Windows
 date:   2026-04-28 11:00:00 +1030
 ---
 
-Taking a look at using [Lima](0) which is a is a tool that allows you to run Linux
+Taking a look at using [Lima][0] which is a is a tool that allows you to run Linux
 virtual machines on Windows. The Windows version however uses WSL2 so it
 not bring your own kernel compared to if it used Hyper-V and/or the
 Windows Hypervisor Platform .
@@ -140,7 +140,7 @@ heavy layer on top of WSL2.
 * For VMs, you could create your own root file system and install it.
   Essentially, what I explored in [WSL, Alpine and Podman]({% post_url 2022-10-30-osrm %})
 
-After all the current description on the [Lima homepage](0), which as it says
+After all the current description on the [Lima homepage][0], which as it says
 its intending to be similar to WSL2.
 > What is Lima?
 >

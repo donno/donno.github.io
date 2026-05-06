@@ -249,7 +249,7 @@ https://git.kernel.org/pub/scm/infra/cgit.git
 ```
 
 While writing up this post, I was unable to fetch a loose object. When I first
-tried this I tried a project from [sourcehut](4) as that forge/platform supports
+tried this I tried a project from [sourcehut][4] as that forge/platform supports
 the protocol.
 
 * Query the references
