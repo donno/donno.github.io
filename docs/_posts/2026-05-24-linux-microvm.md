@@ -114,19 +114,14 @@ mount: mounting devpts on /dev/pts failed: No such device
       configured. I didn't write down which kernel configuration this was
       related to.
     * The other `/dev/pts` parts are also removed.
-\
-```
-Inital error
-mount: mounting tmpfs on /dev/shm failed: Invalid argument
-
-Call through strace.
-mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID|MS_NODEV|MS_SILENT, NULL) = -1 EINVAL (Invalid argument)
-```
-
-CONFIG_TMPFS is false but `grep -i tmpfs /proc/filesystems` included tempfs.
-
-* Filesystems -> Pseudo filesystems -> Tmpfs virtual memory file system support (former shm fs),
-* "Tmpfs POSIX Access Control Lists " was turned on as wel.
+  * Initial error
+    `mount: mounting tmpfs on /dev/shm failed: Invalid argument`
+  * Call through strace.
+    `mount("tmpfs", "/dev/shm", "tmpfs", MS_NOSUID|MS_NODEV|MS_SILENT, NULL) = -1 EINVAL (Invalid argument)`
+  * Cause:
+    `CONFIG_TMPFS is false but `grep -i tmpfs /proc/filesystems` included tempfs.`
+    * Filesystems -> Pseudo filesystems -> Tmpfs virtual memory file system support (former shm fs),
+    * "Tmpfs POSIX Access Control Lists " was turned on as wel.
 
 That worked they now mounted.
 ```
