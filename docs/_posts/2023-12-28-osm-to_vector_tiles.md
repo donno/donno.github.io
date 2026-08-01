@@ -126,6 +126,52 @@ applied then Positron GL style applied.
 
 ![Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style](/assets/2023-12-28-adelaide-osm_raster_v_vector.gif "Animation going between Adelaide rendered by QGIS from OSM raster tiles, vector tiles using the OSM Bright then Positron GL style.")
 
+### Rendering with MapLibre Native
+
+**Update:** This section was added in August 2026 but was written at least two years
+before.
+
+The above option with QGIS was more to confirm that the tiles were correct and
+is a easy way to check that. However, for my plans the idea is to use
+[MapLibre Native][12] which is a free and open-source library for rendering
+maps in your applications. This means I don't need to spend more time on my own
+renderer.
+
+For this, I used Windows so I followed the [Windows instructions][12] for
+building.
+```
+git clone --recurse-submodules -j8 https://github.com/maplibre/maplibre-native.git
+cd maplibre-native
+cmake . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build build
+```
+
+Tweaking the style-local.json from osm-bright-gl-style to the following, where
+it tells it to load the tiles, to use the internet for the sprite and a
+local version I had generated previously of the fonts. I can't recall how I
+I generated the fonts (perhaps, revisit it and then move this whole section
+to a follow-up post).
+
+I suspect I generated this with build_pbf_glyphs from  sdf_font_tools
+
+Running `sdf_font_tools\target\release\deps\build_pbf_glyphs.exe`
+```
+...
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "mbtiles://G:/GeoData/Generated/OpenStreetMap/adelaide-2023-12-28.mbtiles"
+    }
+  },
+  "sprite": "https://openmaptiles.github.io/osm-bright-gl-style/sprite",
+  "glyphs": "file://G:/GeoData/Generated/OpenStreetMap/fonts/{fontstack}/{range}.pbf",
+...
+```
+
+```
+.\build\bin\mbgl-render.exe --style osm-bright-gl-style\style-local.json --output out_adelaide.png --zoom 14 --lat=-34.927676 --lon=138.598916
+```
+
 [0]: https://www.openstreetmap.org/
 [1]: https://github.com/mapbox/mbtiles-spec
 [2]: https://github.com/mapbox/vector-tile-spec
@@ -137,3 +183,5 @@ applied then Positron GL style applied.
 [8]: https://github.com/openmaptiles/positron-gl-style
 [9]: https://github.com/microsoft/AustraliaBuildingFootprints
 [10]: https://tools.geofabrik.de/calc/?tab=1
+[11]: https://github.com/maplibre/maplibre-native
+[12]: https://github.com/maplibre/maplibre-native/blob/612b5dd8a9d4f15c9884a2280de88f3e9ba53073/platform/windows/README.md
