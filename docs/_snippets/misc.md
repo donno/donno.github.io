@@ -53,3 +53,57 @@ podman run --rm --privileged -it -v G:\GeoData\Generated\OSM:/app/result ghcr.io
 
 The `--privileged` is needed to use the ramdisk option.
 The above doesn't work,
+
+# Parse listing with AWK
+
+## Example Input
+```
+2023-12-27 10:30:24  283297278 USGS_LPC_NV_NorthWestElko_2020_D20_11TNG820470.laz
+```
+
+For awk this will be parsed as:
+```
+$1 = 2023-12-27
+$2 = 10:30:24
+$3 = 283297278
+$4 = USGS_LPC_NV_NorthWestElko_2020_D20_11TNG820470.laz
+```
+
+## Bytes
+```sh
+awk '{ total += $3 } END { printf "total=%d\n", total }' input.txt
+```
+
+## MiB
+```sh
+awk '{ total += $3 } END { printf "bytes=%d, MiB=%.2f\n", total, total / 1024 / 1024 }' input.txt
+```
+
+## GiB
+```sh
+awk '{ total += $3 } END { printf "%.2f GiB\n", total / 1024 / 1024 / 1024 }' input.txt
+```
+
+## Automatic
+
+```sh
+awk '
+{ total += $3 }
+END {
+    if (total >= 1024^3)
+        printf "%.2f GiB\n", total / 1024^3
+    else if (total >= 1024^2)
+        printf "%.2f MiB\n", total / 1024^2
+    else if (total >= 1024)
+        printf "%.2f KiB\n", total / 1024
+    else
+        printf "%d bytes\n", total
+}' input.txt
+```
+
+Compact
+```sh
+awk '{t+=$3} END {if(t>=1024^3) printf "%.2f GiB\n",t/1024^3; else if(t>=1024^2) printf "%.2f MiB\n",t/1024^2; else if(t>=1024) printf "%.2f KiB\n",t/1024; else printf "%d bytes\n",t}' input.txt
+```
+
+
