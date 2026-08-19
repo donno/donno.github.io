@@ -1,3 +1,5 @@
+---
+---
 ## Objective
 Generate a Cloud Optimized Point Cloud (COPC) from a several LAS/LAZ files
 and assign metadata to them.

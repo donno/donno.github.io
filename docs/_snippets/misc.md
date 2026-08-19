@@ -1,3 +1,5 @@
+---
+---
 # Misc
 
 Single line snippets that I didn't justify giving them their own page.

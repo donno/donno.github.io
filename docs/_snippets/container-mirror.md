@@ -1,26 +1,28 @@
-`---
+---
 name: Mirror containers locally
+layout: snippets
 ---
 
 ## Set-up
 
 * Download `skopeo` - a command line utility that performs various operations
   on container images and image repositories.
-  * Windows: 
+  * Windows:
     ```
     curl.exe -LO https://github.com/passcod/winskopeo/releases/latest/download/skopeo.exe
     ```
-* 
 
 ### Registry
 
-Build or download registry.exe`
+Build or download registry.exe
 
 * `go.exe install -v github.com/distribution/distribution/cmd/registry@3`
 
 I don't think the above command works, I suspect I ended up cloning the
 repository and building it.
 
+Update 2026-08: I have since been trying [Zot](https://zotregistry.dev) instead but
+have not updated the snippets yet.
 
 Create `registry.config.yml` with:
 ```yaml
@@ -129,7 +131,7 @@ images.
 * docker.io/library/rust:1.94
 * ghcr.io/u-root/cpu:main
 * docker.io/openapitools/openapi-generator-cli:latest
-* public.ecr.aws/docker/library/rockylinux:9 
+* public.ecr.aws/docker/library/rockylinux:9
 * public.ecr.aws/aws-dynamodb-local/aws-dynamodb-local:3.3.0
 
 ### March 2026
@@ -142,7 +144,7 @@ Images that I had were:
 * Issue trackers - to evaluate replacement for self-hosted Jira
 ** Makeplane
 ** Taigaio
-* registry.access.redhat.com/ubi10/ubi 
-* quay.io/curl/curl  
-* quay.io/lib/mongo-express 
+* registry.access.redhat.com/ubi10/ubi
+* quay.io/curl/curl
+* quay.io/lib/mongo-express
 * rabbitmq

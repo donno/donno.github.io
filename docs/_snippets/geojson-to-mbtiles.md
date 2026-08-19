@@ -1,3 +1,5 @@
+---
+---
 # Convert GeoJSON to mbtiles
 
 This uses [tippecanoe][0] by Mapbox and I've used version 1.36.0. I have
@@ -44,9 +46,13 @@ below.
 
 This uses [osmium-tool][3].
 
-`osmium extract  Source/OpenStreetMap/osm/australia-2023-12-28.osm.pbf --bbox 137.994,-35.619,139.495,-34.359 --output Generated/OpenStreetMap/adelaide-2023-12-28.osm.pbf`
+`osmium extract Source/OpenStreetMap/osm/australia-2023-12-28.osm.pbf --bbox 137.994,-35.619,139.495,-34.359 --output Generated/OpenStreetMap/adelaide-2023-12-28.osm.pbf`
+
+Alternatives is the 
 
 [0]: https://github.com/mapbox/tippecanoe
 [1]: https://github.com/felt/tippecanoe
 [2]: https://github.com/systemed/tilemaker
 [3]: https://osmcode.org/osmium-tool/
+[4]: https://www.openstreetmap.org/relation/11381689
+
