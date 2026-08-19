@@ -32,6 +32,7 @@ header_pages:
   - gaming/index.md
   - music.md
   - projects.md
+  - snippets.md
 
 # Build settings
 markdown: kramdown
