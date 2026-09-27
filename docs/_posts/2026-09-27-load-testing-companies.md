@@ -1,3 +1,8 @@
+---
+layout: post
+title:  GitHub Runner at Home
+date:   2026-09-27 20:00:00 +1030
+---
 
 Last year, 2025, I was tasked with testing how our web service at work
 performed when under load. To confirm that the actions of users in one company
@@ -33,8 +38,9 @@ project was rewritten.
 
 * First names come from [popular baby names][1] in the state of South Australia
   from 1944 to 2013.
-* Surnames of people who passed away between 1880 and 1923 from the
-  [deceased estate files][2] of the state of New South Wales from 1880 to 1923.
+* Last names (surnames) of people who passed away between 1880 and 1923 from
+  the [deceased estate files][2] of the state of New South Wales from 1880 to
+  1923.
 * Key change was the first names weren't split into male and females.
 
 [Code][name_people.py]
@@ -305,7 +311,7 @@ def assign_people_to_company(company_count: int, employee_count: int) -> list[in
     )
 ```
 
-The list returned is the index of company that each person was assigned to.
+The list returned is the index of company which each person was assigned to.
 For example:
     `[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]`
 
@@ -332,9 +338,9 @@ The weights on how to split how many companies in the different size ranges
 as well as the weights for each company having variable head count required
 some tweaking to get the desired results.
 
-The catch however is those tweaks were based around the company and employee
-counts. This means the numbers don't work as well for different ratios
-of companies and employees. On top of that there is also  getting the ratio
+The catch is those tweaks were based around the company and employee counts.
+This means the numbers don't work as well for different ratios of companies and
+employees. On top of that there is also  getting the ratio
 between companies and employees right. Essentially there number of
 total employees to go around needs to be at least an order of magnitude larger
 often two.
@@ -345,17 +351,17 @@ about 44 thousand more employees. Reducing the company count down to `1000`
 helps as that means there is now around 2500 extra employees needed but
 it has poor variability however it still twice as much needed.
 
-At the end of the day what I found was `50,000` people amongst `200` companies
+At the end of the day what I found was `50,000` people among `200` companies
 were just right. The reason for this is only `9,400` employees are preassigned
 and the rest of them can be randomly assigned to increase the head counts of
 the companies.
 
 ### Group Allocation
 
-The idea of a group was to either be based on role and/or department, so
-for a large company, you may have "project A", "project B" and "project C" and
+The idea of a group was to either be based on role, department or both, so
+for a large company, there is "project A", "project B" and "project C" and
 each project has a project manager, release engineer, testing lead, senior
-developer, assuming you are modelling a software company.
+developer, assuming a software company is being modelled.
 
 Based on the company size, it decides what roles are available and what
 weightings there are between the roles.
@@ -380,15 +386,16 @@ then use a `.example` domain. This domain makes it clear the domain and thus
 email addresses are only examples and not valid addresses to send an email
 to.
 
-There were bigger ambitious here of of including a country code, but there
-was no open data source that listed top-level domains (for countries) and
-the number of registered domains for each to be able to use as a weight.
+There were bigger ambitions of including a country code, but no open data
+source could be found that listed top-level domains (for countries) and the
+number of registered domains for each to be able to use as a weight.
 
 A post-processing step is performed after all the employees of a company are
-generated to ensure each email is unique, by adding a random number between
-10 and 200 before the `@`. This is mainly a problem for the first letter of
-first name and full last name case where the clash rate is higher for larger
-companies, likewise for the four from first and four from last name.
+generated to ensure each email is unique. This step adds a random number
+between 10 and 200 before the `@`. This problem when the first letter of first
+name and full last name are used because the clash rate is higher for
+larger companies. This problem applied to the four from first and four from
+last name style of email as well.
 
 ## All together
 
